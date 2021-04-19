@@ -34,6 +34,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.DiagnosticErrorListener;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.atn.PredictionMode;
 
 import java.io.File;
@@ -275,7 +276,11 @@ class Test {
 			ParserRuleContext t = parser.compilationUnit();
 			if ( notree ) parser.setBuildParseTree(false);
 //			if ( gui ) t.inspect(parser);
-			if ( printTree ) System.out.println(t.toStringTree(parser));
+			if ( printTree ) {System.out.println(t.toStringTree(parser));
+			Token start = t.getStart();
+			System.out.println("Start: "+start.getText());
+			System.out.println("Rule context Text: " + t);
+			}
 		}
 		catch (Exception e) {
 			System.err.println("parser exception: "+e);
