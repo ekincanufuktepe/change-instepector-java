@@ -57,8 +57,8 @@ import java.util.concurrent.CyclicBarrier;
 /Users/parrt/antlr/code/grammars-v4/java8/Test.java
 Total lexer+parser time 1867ms.
  */
-class Test {
-//	public static long lexerTime = 0;
+public class Test {
+	//	public static long lexerTime = 0;
 	public static boolean profile = false;
 	public static boolean notree = false;
 	public static boolean gui = false;
@@ -69,10 +69,11 @@ class Test {
 	public static boolean x2 = false;
 	public static boolean threaded = false;
 	public static boolean quiet = false;
-//	public static long parserStart;
-//	public static long parserStop;
+	//	public static long parserStart;
+	//	public static long parserStop;
 	public static Worker[] workers = new Worker[3];
 	static int windex = 0;
+	private static String parseTree = "";
 
 	public static CyclicBarrier barrier;
 
@@ -106,6 +107,7 @@ class Test {
 
 	public static void main(String[] args) {
 		doAll(args);
+		
 	}
 
 	public static void doAll(String[] args) {
@@ -135,11 +137,11 @@ class Test {
 				}
 				doFiles(javaFiles);
 
-//				DOTGenerator gen = new DOTGenerator(null);
-//				String dot = gen.getDOT(Java8Parser._decisionToDFA[112], false);
-//				System.out.println(dot);
-//				dot = gen.getDOT(Java8Parser._decisionToDFA[81], false);
-//				System.out.println(dot);
+				//				DOTGenerator gen = new DOTGenerator(null);
+				//				String dot = gen.getDOT(Java8Parser._decisionToDFA[112], false);
+				//				System.out.println(dot);
+				//				dot = gen.getDOT(Java8Parser._decisionToDFA[81], false);
+				//				System.out.println(dot);
 
 				if ( x2 ) {
 					System.gc();
@@ -158,13 +160,13 @@ class Test {
 			e.printStackTrace(System.err);   // so we can get stack trace
 		}
 		long stop = System.currentTimeMillis();
-//		System.out.println("Overall time " + (stop - start) + "ms.");
+		//		System.out.println("Overall time " + (stop - start) + "ms.");
 		System.gc();
 	}
 
 	public static void doFiles(List<String> files) throws Exception {
 		long parserStart = System.currentTimeMillis();
-//		lexerTime = 0;
+		//		lexerTime = 0;
 		if ( threaded ) {
 			barrier = new CyclicBarrier(3,new Runnable() {
 				public void run() {
@@ -191,8 +193,8 @@ class Test {
 	}
 
 	private static void report() {
-//		parserStop = System.currentTimeMillis();
-//		System.out.println("Lexer total time " + lexerTime + "ms.");
+		//		parserStop = System.currentTimeMillis();
+		//		System.out.println("Lexer total time " + lexerTime + "ms.");
 		long time = 0;
 		if ( workers!=null ) {
 			// compute max as it's overlapped time
@@ -205,10 +207,10 @@ class Test {
 		System.out.println("Total lexer+parser time " + time + "ms.");
 
 		System.out.println("finished parsing OK");
-//		System.out.println(ParserATNSimulator.predict_calls +" parser predict calls");
-//		System.out.println(ParserATNSimulator.retry_with_context +" retry_with_context after SLL conflict");
-//		System.out.println(ParserATNSimulator.retry_with_context_indicates_no_conflict +" retry sees no conflict");
-//		System.out.println(ParserATNSimulator.retry_with_context_predicts_same_alt +" retry predicts same alt as resolving conflict");
+		//		System.out.println(ParserATNSimulator.predict_calls +" parser predict calls");
+		//		System.out.println(ParserATNSimulator.retry_with_context +" retry_with_context after SLL conflict");
+		//		System.out.println(ParserATNSimulator.retry_with_context_indicates_no_conflict +" retry sees no conflict");
+		//		System.out.println(ParserATNSimulator.retry_with_context_predicts_same_alt +" retry predicts same alt as resolving conflict");
 	}
 
 	public static List<String> getFilenames(File f) throws Exception {
@@ -228,7 +230,7 @@ class Test {
 
 		// otherwise, if this is a java file, parse it!
 		else if ( ((f.getName().length()>5) &&
-			f.getName().substring(f.getName().length()-5).equals(".java")) )
+				f.getName().substring(f.getName().length()-5).equals(".java")) )
 		{
 			files.add(f.getAbsolutePath());
 		}
@@ -236,23 +238,23 @@ class Test {
 
 	// This method decides what action to take based on the type of
 	//   file we are looking at
-//	public static void doFile_(File f) throws Exception {
-//		// If this is a directory, walk each file/dir in that directory
-//		if (f.isDirectory()) {
-//			String files[] = f.list();
-//			for(int i=0; i < files.length; i++) {
-//				doFile_(new File(f, files[i]));
-//			}
-//		}
-//
-//		// otherwise, if this is a java file, parse it!
-//		else if ( ((f.getName().length()>5) &&
-//			f.getName().substring(f.getName().length()-5).equals(".java")) )
-//		{
-//			System.err.println(f.getAbsolutePath());
-//			parseFile(f.getAbsolutePath());
-//		}
-//	}
+	//	public static void doFile_(File f) throws Exception {
+	//		// If this is a directory, walk each file/dir in that directory
+	//		if (f.isDirectory()) {
+	//			String files[] = f.list();
+	//			for(int i=0; i < files.length; i++) {
+	//				doFile_(new File(f, files[i]));
+	//			}
+	//		}
+	//
+	//		// otherwise, if this is a java file, parse it!
+	//		else if ( ((f.getName().length()>5) &&
+	//			f.getName().substring(f.getName().length()-5).equals(".java")) )
+	//		{
+	//			System.err.println(f.getAbsolutePath());
+	//			parseFile(f.getAbsolutePath());
+	//		}
+	//	}
 
 	public static void parseFile(String f) {
 		try {
@@ -261,10 +263,10 @@ class Test {
 			Lexer lexer = new Java8Lexer(CharStreams.fromFileName(f));
 
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
-//			long start = System.currentTimeMillis();
-//			tokens.fill(); // load all and check time
-//			long stop = System.currentTimeMillis();
-//			lexerTime += stop-start;
+			//			long start = System.currentTimeMillis();
+			//			tokens.fill(); // load all and check time
+			//			long stop = System.currentTimeMillis();
+			//			lexerTime += stop-start;
 
 			// Create a parser that reads from the scanner
 			Java8Parser parser = new Java8Parser(tokens);
@@ -275,11 +277,14 @@ class Test {
 			// start parsing at the compilationUnit rule
 			ParserRuleContext t = parser.compilationUnit();
 			if ( notree ) parser.setBuildParseTree(false);
-//			if ( gui ) t.inspect(parser);
-			if ( printTree ) {System.out.println(t.toStringTree(parser));
-			Token start = t.getStart();
-			System.out.println("Start: "+start.getText());
-			System.out.println("Rule context Text: " + t);
+			//			if ( gui ) t.inspect(parser);
+			if ( printTree ) {
+				
+				parseTree = t.toStringTree(parser);
+				System.out.println("Parse Tree: " + parseTree);
+				Token start = t.getStart();
+				System.out.println("Start: "+start.getText());
+				System.out.println("Rule context Text: " + t);
 			}
 		}
 		catch (Exception e) {
