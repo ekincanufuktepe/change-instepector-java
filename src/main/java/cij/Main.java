@@ -16,6 +16,7 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import cij.changerules.method.AddMethod;
 import cij.grammar.java.Java8Lexer;
 import cij.grammar.java.Java8Parser;
 import cij.grammar.java.JavaParseTree;
@@ -72,7 +73,9 @@ public class Main {
 	public static void main(String[] args) {
 		doAll(args);
 		JavaParseTree jpt = new JavaParseTree(parseTree);
-		jpt.printTree(jpt.tokenizeParseTree(), 0);
+		jpt.tokenizeParseTree();
+		AddMethod AM = new AddMethod(jpt);
+		//jpt.printTree(jpt.tokenizeParseTree(), 0);
 //		for(String token : jpt.tokenizeParseTree())
 //			System.out.println("Token: " + token);
 	}

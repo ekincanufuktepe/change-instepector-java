@@ -3,6 +3,7 @@ package cij.grammar.java;
 public class JavaParseTree {
 	
 	private String unfilteredParseTree;
+	private CodeComponentNode rootNode;
 	
 	public JavaParseTree(String unfilteredParseTree) {
 		this.unfilteredParseTree = unfilteredParseTree;
@@ -15,6 +16,7 @@ public class JavaParseTree {
 		
 		CodeComponentNode root = new CodeComponentNode(result[0], null);
 		CodeComponentNode node = root; 
+		this.rootNode = root;
 		for(int i=1; i<result.length; i++) {
 			if(result[i].equals("(") || result[i].equals(")")) {
 				node.getCodeList().add(result[i]);
@@ -44,7 +46,6 @@ public class JavaParseTree {
 				node.getCodeList().add(result[i]);
 			}
 		}
-		
 		return root;
 	}
 	
@@ -58,6 +59,14 @@ public class JavaParseTree {
 		for(CodeComponentNode child : node.getChildren()) {
 			printTree(child, level+1);
 		}
+	}
+
+	public CodeComponentNode getRootNode() {
+		return rootNode;
+	}
+
+	public void setRootNode(CodeComponentNode rootNode) {
+		this.rootNode = rootNode;
 	}
 	
 }

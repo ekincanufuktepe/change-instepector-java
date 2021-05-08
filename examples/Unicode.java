@@ -7,4 +7,17 @@ class Unicode {
         	double x = 2.1;
         	System.out.println(a+x);
         }
+        
+        private static final int sum(int a, int b) {
+        	return a + b;
+        }
+        
+        private Currency div(Currency a, Currency b, Currency c) {
+        	c = a / b;
+        	return c;
+        }
+        
+        public void dummy(String msg) {
+        	System.out.println("Message: " + msg);
+        }
 }
