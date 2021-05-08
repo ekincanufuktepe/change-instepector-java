@@ -58,4 +58,11 @@ public class CodeComponentNode {
 	public String toString() {
 		return "type="+type;
 	}
+	
+//	@Override
+//	public boolean equals(Object obj) {
+//		if(((String)obj).equals(this.type))
+//			return true;
+//		return false;
+//	}
 }

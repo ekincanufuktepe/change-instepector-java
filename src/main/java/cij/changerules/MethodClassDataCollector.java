@@ -33,11 +33,8 @@ public class MethodClassDataCollector {
 					method.setReturnType(collectMethodReturnType(child));
 					// initialize the method name
 					method.setMethodName(collectMethodName(child));
-
-					@SuppressWarnings("unlikely-arg-type")
-					int methodDeclaratorIndex = child.getChildren().indexOf("(methodDeclarator");
-					  
-					//method.setParameterList(collectMethodParameterList(child.getChildren().get(methodDeclaratorIndex).getChildren().get(0)));
+					// initialize method parameter list
+					method.setParameterList(collectMethodParameterList(child));
 				}
 			}
 			methodList.add(method);
@@ -79,4 +76,47 @@ public class MethodClassDataCollector {
 		return "";
 	}
 
+	/**
+	 * 
+	 * @param root
+	 * @return
+	 */
+	private ArrayList<String> collectMethodParameterList(CodeComponentNode root) {
+		CodeComponentNode parameterNode = null;
+		ArrayList<String> parameterList = new ArrayList<String>();
+		for(CodeComponentNode node : root.getChildren()) {
+			if(node.getType().equals("(methodDeclarator")) {
+				if(node.getChildren().isEmpty())
+					return parameterList;
+				parameterNode = node.getChildren().get(0);
+				break;
+			}
+		}
+		
+		for(CodeComponentNode child : parameterNode.getChildren()) {
+			String parameterName = "";
+			String parameterType = "";
+			if(child.getType().equals("(formalParameters")) {
+				do {
+					if(child.getChildren().size() > 1 && child.getChildren().get(1).getType().equals("(variableDeclaratorId")) {
+						parameterName = child.getChildren().get(1).getCodeList().get(0).replace(")", "");
+					}
+					child = child.getChildren().get(0);
+				} while (!child.getChildren().isEmpty());
+				parameterType = child.getCodeList().get(0).replace(")", "");
+				parameterList.add(parameterType + " " + parameterName);
+			}
+			if(child.getType().equals("(lastFormalParameter")) {
+				do {
+					if(child.getChildren().size() > 1 && child.getChildren().get(1).getType().equals("(variableDeclaratorId")) {
+						parameterName = child.getChildren().get(1).getCodeList().get(0).replace(")", "");
+					}
+					child = child.getChildren().get(0);
+				} while (!child.getChildren().isEmpty());
+				parameterType = child.getCodeList().get(0).replace(")", "");
+				parameterList.add(parameterType + " " + parameterName);
+			}
+		}
+		return parameterList;
+	}
 }
