@@ -39,6 +39,7 @@ public class Main {
 	public static Worker[] workers = new Worker[3];
 	static int windex = 0;
 	private static String parseTree = "";
+	private static ArrayList<String> parseTreeList = new ArrayList<>();
 
 	public static CyclicBarrier barrier;
 
@@ -72,9 +73,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		doAll(args);
-		JavaParseTree jpt = new JavaParseTree(parseTree);
-		jpt.tokenizeParseTree();
-		AddMethod AM = new AddMethod(jpt);
+		
+		JavaParseTree beforeChangeTree = new JavaParseTree(parseTreeList.get(0));
+		JavaParseTree afterChangeTree = new JavaParseTree(parseTreeList.get(1));
+		beforeChangeTree.tokenizeParseTree();
+		afterChangeTree.tokenizeParseTree();
+		AddMethod am = new AddMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + am.getCategory());
 		//jpt.printTree(jpt.tokenizeParseTree(), 0);
 //		for(String token : jpt.tokenizeParseTree())
 //			System.out.println("Token: " + token);
@@ -221,6 +226,7 @@ public class Main {
 			ParserRuleContext t = parser.compilationUnit();
 			if ( printTree ) {
 				parseTree = t.toStringTree(parser);
+				parseTreeList.add(parseTree);
 				System.out.println("Parse Tree: " + parseTree);
 				Token start = t.getStart();
 				System.out.println("Start: "+start.getText());

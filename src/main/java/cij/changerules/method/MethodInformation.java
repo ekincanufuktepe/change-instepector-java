@@ -39,6 +39,17 @@ public class MethodInformation {
 				+ returnType + ", accessModifier=" + accessModifier + "]";
 	}
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		MethodInformation method = (MethodInformation)obj;
+		if(method.toString().equals(this.toString()))
+			return true;
+		return false;
+	}
 
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return toString().hashCode();
+	}
 }

@@ -7,7 +7,7 @@ import cij.grammar.java.JavaParseTree;
 public class IncreaseMethodAccessibility implements ChangeRule {
 
 	@Override
-	public ChangeCategory getCategory(JavaParseTree beforeChangeCode, JavaParseTree afterChangeCode) {
+	public ChangeCategory getCategory() {
 		// TODO Auto-generated method stub
 		return null;
 	}
