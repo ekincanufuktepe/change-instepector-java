@@ -8,7 +8,7 @@ class Unicode {
         	System.out.println(a+x);
         }
         
-        private static final int sum(int a, int b) {
+        private static final float sum(int a, int b) {
         	return a + b;
         }
         

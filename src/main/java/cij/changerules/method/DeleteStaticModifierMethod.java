@@ -32,7 +32,7 @@ public class DeleteStaticModifierMethod implements ChangeRule {
 		
 		for(MethodInformation beforeChangeMethod : beforeChange.getMethodList()) {
 			for(MethodInformation afterChangeMethod : afterChange.getMethodList()) {
-				if(beforeChangeMethod.getMethodByNameReturnParam().equals(afterChangeMethod.getMethodByNameReturnParam())) {
+				if(beforeChangeMethod.getMethodByNameReturnParamType().equals(afterChangeMethod.getMethodByNameReturnParamType())) {
 					if(beforeChangeMethod.getAccessModifier().contains("static") &&
 							!afterChangeMethod.getAccessModifier().contains("static")) {
 						return true;

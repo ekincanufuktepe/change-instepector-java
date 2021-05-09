@@ -32,7 +32,7 @@ public class AddFinalModifierMethod implements ChangeRule {
 		
 		for(MethodInformation beforeChangeMethod : beforeChange.getMethodList()) {
 			for(MethodInformation afterChangeMethod : afterChange.getMethodList()) {
-				if(beforeChangeMethod.getMethodByNameReturnParam().equals(afterChangeMethod.getMethodByNameReturnParam())) {
+				if(beforeChangeMethod.getMethodByNameReturnParamType().equals(afterChangeMethod.getMethodByNameReturnParamType())) {
 					if(!beforeChangeMethod.getAccessModifier().contains("final") &&
 							afterChangeMethod.getAccessModifier().contains("final")) {
 						return true;

@@ -20,6 +20,7 @@ import cij.changerules.method.AddAbstractModifierMethod;
 import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
 import cij.changerules.method.AddStaticModifierMethod;
+import cij.changerules.method.ChangeReturnTypeMethod;
 import cij.changerules.method.DecreaseMethodAccessibility;
 import cij.changerules.method.DeleteAbstractModifierMethod;
 import cij.changerules.method.DeleteFinalModifierMethod;
@@ -116,6 +117,8 @@ public class Main {
 		DeleteAbstractModifierMethod dabm = new DeleteAbstractModifierMethod(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + dabm.getCategory());
 		
+		ChangeReturnTypeMethod crm = new ChangeReturnTypeMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + crm.getCategory());
 	}
 
 	public static void doAll(String[] args) {

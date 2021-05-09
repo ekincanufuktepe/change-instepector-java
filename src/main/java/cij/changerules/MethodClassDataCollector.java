@@ -36,6 +36,11 @@ public class MethodClassDataCollector {
 					method.setMethodName(collectMethodName(child));
 					// initialize method parameter list
 					method.setParameterList(collectMethodParameterList(child));
+					for(String parameter : method.getParameterList()) {
+						String[] parameterToken = parameter.split(" ");
+						method.getParameterTypeList().add(parameterToken[0]);
+						method.getParameterNameList().add(parameterToken[1]);
+					}
 				}
 			}
 			methodList.add(method);

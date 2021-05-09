@@ -6,6 +6,8 @@ public class MethodInformation {
 	
 	private String methodName;
 	private ArrayList<String> parameterList = new ArrayList<>();
+	private ArrayList<String> parameterNameList = new ArrayList<>();
+	private ArrayList<String> parameterTypeList = new ArrayList<>();
 	private String returnType;
 	private ArrayList<String> accessModifier = new ArrayList<>();
 	
@@ -34,8 +36,8 @@ public class MethodInformation {
 		this.accessModifier = accessModifier;
 	}
 	
-	public String getMethodByNameReturnParam() {
-		return returnType + " " + methodName + " " + parameterList;
+	public String getMethodByNameReturnParamType() {
+		return returnType + " " + methodName + " " + parameterTypeList;
 	}
 	
 	@Override
@@ -47,7 +49,7 @@ public class MethodInformation {
 	@Override
 	public boolean equals(Object obj) {
 		MethodInformation method = (MethodInformation)obj;
-		if(method.getMethodByNameReturnParam().equals(this.getMethodByNameReturnParam()))
+		if(method.getMethodByNameReturnParamType().equals(this.getMethodByNameReturnParamType()))
 			return true;
 		return false;
 	}
@@ -55,6 +57,18 @@ public class MethodInformation {
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return getMethodByNameReturnParam().hashCode();
+		return getMethodByNameReturnParamType().hashCode();
+	}
+	public ArrayList<String> getParameterNameList() {
+		return parameterNameList;
+	}
+	public void setParameterNameList(ArrayList<String> parameterNameList) {
+		this.parameterNameList = parameterNameList;
+	}
+	public ArrayList<String> getParameterTypeList() {
+		return parameterTypeList;
+	}
+	public void setParameterTypeList(ArrayList<String> parameterTypeList) {
+		this.parameterTypeList = parameterTypeList;
 	}
 }
