@@ -36,4 +36,8 @@ class Unicode {
         public abstract void methodWithoutAbstract() {
         	System.out.println("For AAbM rule");
         }
+        
+        public void methodWithAbstract() {
+        	System.out.println("For DAbM rule");
+        }
 }

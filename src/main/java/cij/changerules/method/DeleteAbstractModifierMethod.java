@@ -1,27 +1,24 @@
 package cij.changerules.method;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import cij.changerules.ChangeCategory;
 import cij.changerules.ChangeRule;
 import cij.changerules.MethodClassDataCollector;
 import cij.grammar.java.JavaParseTree;
 
-public class AddMethod implements ChangeRule{
+public class DeleteAbstractModifierMethod implements ChangeRule {
 	
 	private JavaParseTree treeBeforeChange;
 	private JavaParseTree treeAfterChange;
 	
-	public AddMethod(JavaParseTree treeBeforeChange, JavaParseTree treeAfterChange) {
+	public DeleteAbstractModifierMethod(JavaParseTree treeBeforeChange, JavaParseTree treeAfterChange) {
 		this.treeBeforeChange = treeBeforeChange;
 		this.treeAfterChange = treeAfterChange;
 	}
-	
+
 	@Override
 	public ChangeCategory getCategory() {
 		if(isChangeCategory(treeBeforeChange, treeAfterChange)) {
-			return ChangeCategory.AM_ADD_METHOD;
+			return ChangeCategory.DAbM_DELETE_ABSTRACT_MODIFIER_METHOD;
 		}
 		return null;
 	}
@@ -30,20 +27,19 @@ public class AddMethod implements ChangeRule{
 	public boolean isChangeCategory(JavaParseTree beforeChangeCode, JavaParseTree afterChangeCode) {
 		MethodClassDataCollector beforeChange = new MethodClassDataCollector();
 		beforeChange.collectMethods(beforeChangeCode.getRootNode());
-
 		MethodClassDataCollector afterChange = new MethodClassDataCollector();
 		afterChange.collectMethods(afterChangeCode.getRootNode());
-		Set<MethodInformation> afterChangeMethodSet = new HashSet<>();
-		afterChangeMethodSet.addAll(afterChange.getMethodList());
 		
-		for(MethodInformation method : beforeChange.getMethodList()) {
-			afterChangeMethodSet.remove(method);
-		}
-		
-		if(!afterChangeMethodSet.isEmpty()) {
-			return true;
+		for(MethodInformation beforeChangeMethod : beforeChange.getMethodList()) {
+			for(MethodInformation afterChangeMethod : afterChange.getMethodList()) {
+				if(beforeChangeMethod.getMethodByNameReturnParam().equals(afterChangeMethod.getMethodByNameReturnParam())) {
+					if(beforeChangeMethod.getAccessModifier().contains("abstract") &&
+							!afterChangeMethod.getAccessModifier().contains("abstract")) {
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}
-
 }

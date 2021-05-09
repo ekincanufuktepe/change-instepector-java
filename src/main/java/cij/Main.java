@@ -21,6 +21,7 @@ import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
 import cij.changerules.method.AddStaticModifierMethod;
 import cij.changerules.method.DecreaseMethodAccessibility;
+import cij.changerules.method.DeleteAbstractModifierMethod;
 import cij.changerules.method.DeleteFinalModifierMethod;
 import cij.changerules.method.DeleteStaticModifierMethod;
 import cij.changerules.method.IncreaseMethodAccessibility;
@@ -111,6 +112,10 @@ public class Main {
 
 		AddAbstractModifierMethod aabm = new AddAbstractModifierMethod(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + aabm.getCategory());
+		
+		DeleteAbstractModifierMethod dabm = new DeleteAbstractModifierMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + dabm.getCategory());
+		
 	}
 
 	public static void doAll(String[] args) {
