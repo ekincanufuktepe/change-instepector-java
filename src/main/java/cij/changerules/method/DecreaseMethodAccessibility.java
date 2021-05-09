@@ -5,12 +5,12 @@ import cij.changerules.ChangeRule;
 import cij.changerules.MethodClassDataCollector;
 import cij.grammar.java.JavaParseTree;
 
-public class IncreaseMethodAccessibility implements ChangeRule {
+public class DecreaseMethodAccessibility implements ChangeRule {
 	
 	private JavaParseTree treeBeforeChange;
 	private JavaParseTree treeAfterChange;
 	
-	public IncreaseMethodAccessibility(JavaParseTree treeBeforeChange, JavaParseTree treeAfterChange) {
+	public DecreaseMethodAccessibility(JavaParseTree treeBeforeChange, JavaParseTree treeAfterChange) {
 		this.treeBeforeChange = treeBeforeChange;
 		this.treeAfterChange = treeAfterChange;
 	}
@@ -18,7 +18,7 @@ public class IncreaseMethodAccessibility implements ChangeRule {
 	@Override
 	public ChangeCategory getCategory() {
 		if(isChangeCategory(treeBeforeChange, treeAfterChange)) {
-			return ChangeCategory.IAM_INCREASE_ACCESSIBILITY_METHOD;
+			return ChangeCategory.DAM_DECREASE_ACCESSIBILITY_METHOD;
 		}
 		return null;
 	}
@@ -33,8 +33,8 @@ public class IncreaseMethodAccessibility implements ChangeRule {
 		for(MethodInformation beforeChangeMethod : beforeChange.getMethodList()) {
 			for(MethodInformation afterChangeMethod : afterChange.getMethodList()) {
 				if(beforeChangeMethod.getMethodByNameReturnParam().equals(afterChangeMethod.getMethodByNameReturnParam())) {
-					if(beforeChangeMethod.getAccessModifier().contains("private") &&
-							afterChangeMethod.getAccessModifier().contains("public")) {
+					if(beforeChangeMethod.getAccessModifier().contains("public") &&
+							afterChangeMethod.getAccessModifier().contains("private")) {
 						return true;
 					}
 				}

@@ -12,12 +12,12 @@ class Unicode {
         	return a + b;
         }
         
-        private Currency div(Currency a, Currency b, Currency c) {
+        public Currency div(Currency a, Currency b, Currency c) {
         	c = a / b;
         	return c;
         }
         
-//        public void dummy(String msg) {
-//        	System.out.println("Message: " + msg);
-//        }
+        public void dummy(String msg) {
+        	System.out.println("Message: " + msg);
+        }
 }

@@ -17,6 +17,7 @@ import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import cij.changerules.method.AddMethod;
+import cij.changerules.method.DecreaseMethodAccessibility;
 import cij.changerules.method.IncreaseMethodAccessibility;
 import cij.grammar.java.Java8Lexer;
 import cij.grammar.java.Java8Parser;
@@ -79,13 +80,17 @@ public class Main {
 		JavaParseTree afterChangeTree = new JavaParseTree(parseTreeList.get(1));
 		beforeChangeTree.tokenizeParseTree();
 		afterChangeTree.tokenizeParseTree();
+		
+		// Test rules
+		
 		AddMethod am = new AddMethod(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + am.getCategory());
+		
 		IncreaseMethodAccessibility iam = new IncreaseMethodAccessibility(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + iam.getCategory());
-		//jpt.printTree(jpt.tokenizeParseTree(), 0);
-//		for(String token : jpt.tokenizeParseTree())
-//			System.out.println("Token: " + token);
+		
+		DecreaseMethodAccessibility dam = new DecreaseMethodAccessibility(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + dam.getCategory());
 	}
 
 	public static void doAll(String[] args) {
