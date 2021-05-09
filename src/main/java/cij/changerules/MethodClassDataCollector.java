@@ -103,14 +103,16 @@ public class MethodClassDataCollector {
 			String parameterName = "";
 			String parameterType = "";
 			if(child.getType().equals("(formalParameters")) {
-				do {
-					if(child.getChildren().size() > 1 && child.getChildren().get(1).getType().equals("(variableDeclaratorId")) {
-						parameterName = child.getChildren().get(1).getCodeList().get(0).replace(")", "");
-					}
-					child = child.getChildren().get(0);
-				} while (!child.getChildren().isEmpty());
-				parameterType = child.getCodeList().get(0).replace(")", "");
-				parameterList.add(parameterType + " " + parameterName);
+				for(CodeComponentNode parameterNodes : child.getChildren()) {
+					do {
+						if(parameterNodes.getChildren().size() > 1 && parameterNodes.getChildren().get(1).getType().equals("(variableDeclaratorId")) {
+							parameterName = parameterNodes.getChildren().get(1).getCodeList().get(0).replace(")", "");
+						}
+						parameterNodes = parameterNodes.getChildren().get(0);
+					} while (!parameterNodes.getChildren().isEmpty());
+					parameterType = parameterNodes.getCodeList().get(0).replace(")", "");
+					parameterList.add(parameterType + " " + parameterName);
+				}
 			}
 			if(child.getType().equals("(lastFormalParameter")) {
 				do {

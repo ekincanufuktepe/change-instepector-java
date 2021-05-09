@@ -20,12 +20,14 @@ import cij.changerules.method.AddAbstractModifierMethod;
 import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
 import cij.changerules.method.AddStaticModifierMethod;
+import cij.changerules.method.ChangeParameterNamesMethod;
 import cij.changerules.method.ChangeReturnTypeMethod;
 import cij.changerules.method.DecreaseMethodAccessibility;
 import cij.changerules.method.DeleteAbstractModifierMethod;
 import cij.changerules.method.DeleteFinalModifierMethod;
 import cij.changerules.method.DeleteStaticModifierMethod;
 import cij.changerules.method.IncreaseMethodAccessibility;
+import cij.changerules.method.MethodInformation;
 import cij.grammar.java.Java8Lexer;
 import cij.grammar.java.Java8Parser;
 import cij.grammar.java.JavaParseTree;
@@ -119,6 +121,10 @@ public class Main {
 		
 		ChangeReturnTypeMethod crm = new ChangeReturnTypeMethod(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + crm.getCategory());
+		
+		ChangeParameterNamesMethod cnpm = new ChangeParameterNamesMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + cnpm.getCategory());
+
 	}
 
 	public static void doAll(String[] args) {

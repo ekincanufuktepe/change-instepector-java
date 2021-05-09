@@ -12,8 +12,8 @@ class Unicode {
         	return a + b;
         }
         
-        public Currency div(Currency a, Currency b, Currency c) {
-        	c = a / b;
+        public Currency div(Currency x, Currency b, Currency c) {
+        	c = x / b;
         	return c;
         }
         
