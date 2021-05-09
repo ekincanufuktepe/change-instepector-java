@@ -26,7 +26,8 @@ public class MethodClassDataCollector {
 			for(CodeComponentNode child : root.getChildren()) {
 				if(child.getType().equals("(methodModifier")) {
 					// initialize the modifiers
-					method.getAccessModifier().add(child.getCodeList().get(0));
+					child.getCodeList().get(0).replace("(", "");
+					method.getAccessModifier().add(child.getCodeList().get(0).replace(")", ""));
 				}
 				if(child.getType().equals("(methodHeader")) {
 					// initialize the method return type

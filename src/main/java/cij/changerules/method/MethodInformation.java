@@ -33,6 +33,11 @@ public class MethodInformation {
 	public void setAccessModifier(ArrayList<String> accessModifier) {
 		this.accessModifier = accessModifier;
 	}
+	
+	public String getMethodByNameReturnParam() {
+		return returnType + " " + methodName + " " + parameterList;
+	}
+	
 	@Override
 	public String toString() {
 		return "MethodInformation [methodName=" + methodName + ", parameterList=" + parameterList + ", returnType="
@@ -42,7 +47,7 @@ public class MethodInformation {
 	@Override
 	public boolean equals(Object obj) {
 		MethodInformation method = (MethodInformation)obj;
-		if(method.toString().equals(this.toString()))
+		if(method.getMethodByNameReturnParam().equals(this.getMethodByNameReturnParam()))
 			return true;
 		return false;
 	}
@@ -50,6 +55,6 @@ public class MethodInformation {
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return toString().hashCode();
+		return getMethodByNameReturnParam().hashCode();
 	}
 }
