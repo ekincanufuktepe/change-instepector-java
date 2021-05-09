@@ -21,6 +21,7 @@ import cij.changerules.method.AddMethod;
 import cij.changerules.method.AddStaticModifierMethod;
 import cij.changerules.method.DecreaseMethodAccessibility;
 import cij.changerules.method.DeleteFinalModifierMethod;
+import cij.changerules.method.DeleteStaticModifierMethod;
 import cij.changerules.method.IncreaseMethodAccessibility;
 import cij.grammar.java.Java8Lexer;
 import cij.grammar.java.Java8Parser;
@@ -103,6 +104,9 @@ public class Main {
 		
 		AddStaticModifierMethod asm = new AddStaticModifierMethod(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + asm.getCategory());
+		
+		DeleteStaticModifierMethod dsm = new DeleteStaticModifierMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + dsm.getCategory());
 	}
 
 	public static void doAll(String[] args) {

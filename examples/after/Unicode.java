@@ -29,4 +29,7 @@ class Unicode {
         	System.out.println("For DFM rule " + msg);
         }
         
+        public void methodWithStatic() {
+        	System.out.println("For DSM rule");
+        }
 }

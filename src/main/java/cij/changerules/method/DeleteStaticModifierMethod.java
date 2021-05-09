@@ -5,12 +5,12 @@ import cij.changerules.ChangeRule;
 import cij.changerules.MethodClassDataCollector;
 import cij.grammar.java.JavaParseTree;
 
-public class DeleteFinalModifierMethod implements ChangeRule {
+public class DeleteStaticModifierMethod implements ChangeRule {
 	
 	private JavaParseTree treeBeforeChange;
 	private JavaParseTree treeAfterChange;
 	
-	public DeleteFinalModifierMethod(JavaParseTree treeBeforeChange, JavaParseTree treeAfterChange) {
+	public DeleteStaticModifierMethod(JavaParseTree treeBeforeChange, JavaParseTree treeAfterChange) {
 		this.treeBeforeChange = treeBeforeChange;
 		this.treeAfterChange = treeAfterChange;
 	}
@@ -18,7 +18,7 @@ public class DeleteFinalModifierMethod implements ChangeRule {
 	@Override
 	public ChangeCategory getCategory() {
 		if(isChangeCategory(treeBeforeChange, treeAfterChange)) {
-			return ChangeCategory.DFM_DELETE_FINAL_MODIFIER_METHOD;
+			return ChangeCategory.DSM_DELETE_STATIC_MODIFIER_METHOD;
 		}
 		return null;
 	}
@@ -33,8 +33,8 @@ public class DeleteFinalModifierMethod implements ChangeRule {
 		for(MethodInformation beforeChangeMethod : beforeChange.getMethodList()) {
 			for(MethodInformation afterChangeMethod : afterChange.getMethodList()) {
 				if(beforeChangeMethod.getMethodByNameReturnParam().equals(afterChangeMethod.getMethodByNameReturnParam())) {
-					if(beforeChangeMethod.getAccessModifier().contains("final") &&
-							!afterChangeMethod.getAccessModifier().contains("final")) {
+					if(beforeChangeMethod.getAccessModifier().contains("static") &&
+							!afterChangeMethod.getAccessModifier().contains("static")) {
 						return true;
 					}
 				}
