@@ -107,6 +107,7 @@ public class Main {
 		
 		DeleteStaticModifierMethod dsm = new DeleteStaticModifierMethod(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + dsm.getCategory());
+
 	}
 
 	public static void doAll(String[] args) {
