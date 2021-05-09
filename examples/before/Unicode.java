@@ -2,6 +2,10 @@ class Unicode {
         public static void main(String[] args) {
                 System.out.println("A = \uuu0041");
         }
+        public static final int sum(int a, float b) {
+        	return a + b;
+        }
+        /*
         private void printSomething() {
         	int a = 6;
         	double x = 2.1;
@@ -43,4 +47,5 @@ class Unicode {
         	System.out.println("Testing change method name from " + oldName + " to " + newName);
         	return 0;
         }
+        */
 }

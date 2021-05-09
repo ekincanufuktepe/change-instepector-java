@@ -21,6 +21,7 @@ import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
 import cij.changerules.method.AddStaticModifierMethod;
 import cij.changerules.method.ChangeMethod;
+import cij.changerules.method.ChangeParameterMethod;
 import cij.changerules.method.ChangeParameterNamesMethod;
 import cij.changerules.method.ChangeReturnTypeMethod;
 import cij.changerules.method.DecreaseMethodAccessibility;
@@ -91,8 +92,6 @@ public class Main {
 		beforeChangeTree.tokenizeParseTree();
 		afterChangeTree.tokenizeParseTree();
 		
-		afterChangeTree.printTree(afterChangeTree.getRootNode(), 0);
-		
 		// Test rules
 		
 		AddMethod am = new AddMethod(beforeChangeTree, afterChangeTree);
@@ -130,6 +129,9 @@ public class Main {
 
 		ChangeMethod cm = new ChangeMethod(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + cm.getCategory());
+		
+		ChangeParameterMethod cpm = new ChangeParameterMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + cpm.getCategory());
 	}
 
 	public static void doAll(String[] args) {
