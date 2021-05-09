@@ -24,4 +24,8 @@ class Unicode {
         private final void methodWithoutFinal() {
         	System.out.println("For AFM rule");
         }
+        
+        public void methodWithFinal(String msg) {
+        	System.out.println("For DFM rule " + msg);
+        }
 }

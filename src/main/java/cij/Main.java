@@ -19,6 +19,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
 import cij.changerules.method.DecreaseMethodAccessibility;
+import cij.changerules.method.DeleteFinalModifierMethod;
 import cij.changerules.method.IncreaseMethodAccessibility;
 import cij.grammar.java.Java8Lexer;
 import cij.grammar.java.Java8Parser;
@@ -93,8 +94,11 @@ public class Main {
 		DecreaseMethodAccessibility dam = new DecreaseMethodAccessibility(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + dam.getCategory());
 		
-		AddFinalModifierMethod afc = new AddFinalModifierMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + afc.getCategory());
+		AddFinalModifierMethod afm = new AddFinalModifierMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + afm.getCategory());
+		
+		DeleteFinalModifierMethod dfm = new DeleteFinalModifierMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + dfm.getCategory());
 	}
 
 	public static void doAll(String[] args) {
