@@ -41,6 +41,8 @@ public class MethodClassDataCollector {
 						method.getParameterTypeList().add(parameterToken[0]);
 						method.getParameterNameList().add(parameterToken[1]);
 					}
+
+					method.setMethodBody(collectMethodBody(root));
 				}
 			}
 			methodList.add(method);
@@ -98,7 +100,7 @@ public class MethodClassDataCollector {
 				break;
 			}
 		}
-		
+
 		for(CodeComponentNode child : parameterNode.getChildren()) {
 			String parameterName = "";
 			String parameterType = "";
@@ -126,5 +128,14 @@ public class MethodClassDataCollector {
 			}
 		}
 		return parameterList;
+	}
+
+	private CodeComponentNode collectMethodBody(CodeComponentNode root) {
+		for(CodeComponentNode child : root.getChildren()) {
+			if(child.getType().equals("(methodBody")) {
+				return child;
+			}
+		}
+		return null;
 	}
 }

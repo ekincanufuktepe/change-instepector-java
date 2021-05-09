@@ -23,6 +23,8 @@ class Unicode {
         
         private final void methodWithFinal(String msg) {
         	System.out.println("For DFM rule " + msg);
+//        	int a=0, b=0, c=0;
+//        	a = b + c;
         }
         
         public static void methodWithStatic() {
@@ -35,5 +37,10 @@ class Unicode {
         
         public abstract void methodWithAbstract() {
         	System.out.println("For DAbM rule");
+        }
+        
+        private final int changeMethodName(String oldName, String newName) {
+        	System.out.println("Testing change method name from " + oldName + " to " + newName);
+        	return 0;
         }
 }

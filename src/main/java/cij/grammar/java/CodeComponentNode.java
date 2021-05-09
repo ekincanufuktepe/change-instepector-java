@@ -54,15 +54,18 @@ public class CodeComponentNode {
 //		this.children = new ArrayList<>();
 		this.parent = parent;
 	}
+
 	@Override
 	public String toString() {
-		return "type="+type;
+		return "CodeComponentNode [parent=" + parent + ", codeList=" + codeList + ", type=" + type + ", children="
+				+ children + "]";
 	}
 	
-//	@Override
-//	public boolean equals(Object obj) {
-//		if(((String)obj).equals(this.type))
-//			return true;
-//		return false;
-//	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(((CodeComponentNode)obj).toString().equals(this.toString()))
+			return true;
+		return false;
+	}
 }
