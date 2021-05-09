@@ -20,4 +20,8 @@ class Unicode {
         public void dummy(String msg) {
         	System.out.println("Message: " + msg);
         }
+        
+        private final void methodWithoutFinal() {
+        	System.out.println("For AFM rule");
+        }
 }

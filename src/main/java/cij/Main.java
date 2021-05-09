@@ -16,6 +16,7 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
 import cij.changerules.method.DecreaseMethodAccessibility;
 import cij.changerules.method.IncreaseMethodAccessibility;
@@ -91,6 +92,9 @@ public class Main {
 		
 		DecreaseMethodAccessibility dam = new DecreaseMethodAccessibility(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + dam.getCategory());
+		
+		AddFinalModifierMethod afc = new AddFinalModifierMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + afc.getCategory());
 	}
 
 	public static void doAll(String[] args) {

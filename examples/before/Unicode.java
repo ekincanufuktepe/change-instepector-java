@@ -15,5 +15,9 @@ class Unicode {
         private Currency div(Currency a, Currency b, Currency c) {
         	c = a / b;
         	return c;
-        }   
+        }
+        
+        public void methodWithoutFinal() {
+        	System.out.println("For AFM rule");
+        }
 }
