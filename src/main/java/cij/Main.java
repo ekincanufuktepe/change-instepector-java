@@ -16,6 +16,7 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import cij.changerules.method.AddAbstractModifierMethod;
 import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
 import cij.changerules.method.AddStaticModifierMethod;
@@ -108,6 +109,8 @@ public class Main {
 		DeleteStaticModifierMethod dsm = new DeleteStaticModifierMethod(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + dsm.getCategory());
 
+		AddAbstractModifierMethod aabm = new AddAbstractModifierMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + aabm.getCategory());
 	}
 
 	public static void doAll(String[] args) {

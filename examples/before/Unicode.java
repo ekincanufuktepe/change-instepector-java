@@ -28,4 +28,8 @@ class Unicode {
         public static void methodWithStatic() {
         	System.out.println("For DSM rule");
         }
+        
+        public void methodWithoutAbstract() {
+        	System.out.println("For AAbM rule");
+        }
 }
