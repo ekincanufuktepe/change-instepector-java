@@ -27,6 +27,7 @@ import cij.changerules.method.ChangeReturnTypeMethod;
 import cij.changerules.method.DecreaseMethodAccessibility;
 import cij.changerules.method.DeleteAbstractModifierMethod;
 import cij.changerules.method.DeleteFinalModifierMethod;
+import cij.changerules.method.DeleteMethod;
 import cij.changerules.method.DeleteStaticModifierMethod;
 import cij.changerules.method.IncreaseMethodAccessibility;
 import cij.changerules.method.MethodInformation;
@@ -134,6 +135,9 @@ public class Main {
 		
 		ChangeParameterMethod cpm = new ChangeParameterMethod(beforeChangeTree, afterChangeTree);
 		System.out.println("Change Category: " + cpm.getCategory());
+		
+		DeleteMethod dm = new DeleteMethod(beforeChangeTree, afterChangeTree);
+		System.out.println("Change Category: " + dm.getCategory());
 	}
 
 	public static void doAll(String[] args) {

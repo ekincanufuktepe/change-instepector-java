@@ -5,6 +5,12 @@ class Unicode {
         public static final int sum(int a, float b) {
         	return a + b;
         }
+        
+        public static final void thisMethodWillBeDeleted(String msg) {
+        	System.out.println("Do random stuff");
+        	System.out.println("Print this message = " + );
+        }
+        
         /*
         private void printSomething() {
         	int a = 6;

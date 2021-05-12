@@ -2,7 +2,7 @@ class Unicode {
         public static void main(String[] args) {
                 System.out.println("A = \uuu0041");
         }
-        public static final int sum(float b, int a) {
+        public static final int sum(int a, float b, ) {
         	return a + b;
         }
         /*
