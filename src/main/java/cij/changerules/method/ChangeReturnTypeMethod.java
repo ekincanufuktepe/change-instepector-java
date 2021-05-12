@@ -38,7 +38,7 @@ public class ChangeReturnTypeMethod implements ChangeRule {
 		for(MethodInformation beforeChangeMethod : beforeChange.getMethodList()) {
 			for(MethodInformation afterChangeMethod : afterChange.getMethodList()) {
 				if(beforeChangeMethod.getMethodName().equals(afterChangeMethod.getMethodName()) &&
-						beforeChangeMethod.getParameterTypeList().containsAll(afterChangeMethod.getParameterTypeList()) &&
+						beforeChangeMethod.getParameterTypeList().equals(afterChangeMethod.getParameterTypeList()) &&
 						!beforeChangeMethod.getReturnType().equals(afterChangeMethod.getReturnType())) {
 					return true;
 				}
