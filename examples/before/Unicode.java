@@ -2,13 +2,13 @@ class Unicode {
         public static void main(String[] args) {
                 System.out.println("A = \uuu0041");
         }
-        public static final int sum(int a, float b) {
+        public static final int adder(int a, float b) {
         	return a + b;
         }
         
         public static final void thisMethodWillBeDeleted(String msg) {
         	System.out.println("Do random stuff");
-        	System.out.println("Print this message = " + );
+        	System.out.println("Print this message = " + msg);
         }
         
         /*
