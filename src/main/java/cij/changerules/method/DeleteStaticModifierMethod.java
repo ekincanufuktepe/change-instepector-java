@@ -5,7 +5,7 @@ import cij.changerules.ChangeRule;
 import cij.changerules.MethodClassDataCollector;
 import cij.grammar.java.JavaParseTree;
 
-public class DeleteStaticModifierMethod implements ChangeRule {
+public class DeleteStaticModifierMethod extends ChangeRule {
 	
 	private JavaParseTree treeBeforeChange;
 	private JavaParseTree treeAfterChange;

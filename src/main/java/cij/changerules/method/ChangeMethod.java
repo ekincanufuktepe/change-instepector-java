@@ -6,7 +6,7 @@ import cij.changerules.MethodClassDataCollector;
 import cij.grammar.java.CodeComponentNode;
 import cij.grammar.java.JavaParseTree;
 
-public class ChangeMethod implements ChangeRule {
+public class ChangeMethod extends ChangeRule {
 
 	private JavaParseTree treeBeforeChange;
 	private JavaParseTree treeAfterChange;

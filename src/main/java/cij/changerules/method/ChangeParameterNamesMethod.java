@@ -5,7 +5,7 @@ import cij.changerules.ChangeRule;
 import cij.changerules.MethodClassDataCollector;
 import cij.grammar.java.JavaParseTree;
 
-public class ChangeParameterNamesMethod implements ChangeRule {
+public class ChangeParameterNamesMethod extends ChangeRule {
 	
 	private JavaParseTree treeBeforeChange;
 	private JavaParseTree treeAfterChange;

@@ -5,7 +5,7 @@ import cij.changerules.ChangeRule;
 import cij.changerules.MethodClassDataCollector;
 import cij.grammar.java.JavaParseTree;
 
-public class IncreaseMethodAccessibility implements ChangeRule {
+public class IncreaseMethodAccessibility extends ChangeRule {
 	
 	private JavaParseTree treeBeforeChange;
 	private JavaParseTree treeAfterChange;

@@ -2,8 +2,13 @@ package cij.changerules;
 
 import cij.grammar.java.JavaParseTree;
 
-public interface ChangeRule {
-	public ChangeCategory getCategory(); 
+public abstract class ChangeRule extends Thread {
+	public abstract ChangeCategory getCategory(); 
 	
-	public boolean isChangeCategory(JavaParseTree beforeChangeCode, JavaParseTree afterChangeCode);
+	public abstract boolean isChangeCategory(JavaParseTree beforeChangeCode, JavaParseTree afterChangeCode);
+	
+	@Override
+	public void run() {
+		getCategory();
+	}
 }

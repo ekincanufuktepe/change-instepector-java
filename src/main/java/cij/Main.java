@@ -16,6 +16,8 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import cij.changerules.ChangeRule;
+import cij.changerules.ChangeRuleSet;
 import cij.changerules.method.AddAbstractModifierMethod;
 import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
@@ -98,50 +100,8 @@ public class Main {
 		
 		// Test rules
 		
-		AddMethod am = new AddMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + am.getCategory());
-		
-		IncreaseMethodAccessibility iam = new IncreaseMethodAccessibility(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + iam.getCategory());
-		
-		DecreaseMethodAccessibility dam = new DecreaseMethodAccessibility(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + dam.getCategory());
-		
-		AddFinalModifierMethod afm = new AddFinalModifierMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + afm.getCategory());
-		
-		DeleteFinalModifierMethod dfm = new DeleteFinalModifierMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + dfm.getCategory());
-		
-		AddStaticModifierMethod asm = new AddStaticModifierMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + asm.getCategory());
-		
-		DeleteStaticModifierMethod dsm = new DeleteStaticModifierMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + dsm.getCategory());
-
-		AddAbstractModifierMethod aabm = new AddAbstractModifierMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + aabm.getCategory());
-		
-		DeleteAbstractModifierMethod dabm = new DeleteAbstractModifierMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + dabm.getCategory());
-		
-		ChangeReturnTypeMethod crm = new ChangeReturnTypeMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + crm.getCategory());
-		
-		ChangeParameterNamesMethod cnpm = new ChangeParameterNamesMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + cnpm.getCategory());
-
-		ChangeMethod cm = new ChangeMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + cm.getCategory());
-		
-		ChangeParameterMethod cpm = new ChangeParameterMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + cpm.getCategory());
-		
-		DeleteMethod dm = new DeleteMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + dm.getCategory());
-		
-		ChangeNameMethod cnm = new ChangeNameMethod(beforeChangeTree, afterChangeTree);
-		System.out.println("Change Category: " + cnm.getCategory());
+		ChangeRuleSet ruleSet = new ChangeRuleSet(beforeChangeTree, afterChangeTree);
+		ruleSet.printChangeTypes();
 	}
 
 	public static void doAll(String[] args) {
