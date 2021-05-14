@@ -48,12 +48,6 @@ public class ChangeNameMethod extends ChangeRule {
 						!beforeChangeMethod.getMethodName().equals(afterChangeMethod.getMethodName())) {
 					return true;
 				}
-				else if (beforeChangeMethod.getParameterList().equals(afterChangeMethod.getParameterList()) && 
-						beforeChangeMethod.getParameterTypeList().equals(afterChangeMethod.getParameterTypeList()) &&
-						beforeChangeMethod.getReturnType().equals(afterChangeMethod.getReturnType()) &&
-						!beforeChangeMethod.getMethodName().equals(afterChangeMethod.getMethodName())) {
-					return true;
-				}
 			}
 		}
 		return false;
