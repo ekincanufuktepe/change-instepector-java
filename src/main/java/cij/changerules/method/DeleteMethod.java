@@ -5,7 +5,7 @@ import java.util.Set;
 
 import cij.changerules.ChangeCategory;
 import cij.changerules.ChangeRule;
-import cij.changerules.MethodClassDataCollector;
+import cij.changerules.MethodInformationDataCollector;
 import cij.grammar.java.JavaParseTree;
 
 public class DeleteMethod extends ChangeRule{
@@ -28,10 +28,10 @@ public class DeleteMethod extends ChangeRule{
 
 	@Override
 	public boolean isChangeCategory(JavaParseTree beforeChangeCode, JavaParseTree afterChangeCode) {
-		MethodClassDataCollector beforeChange = new MethodClassDataCollector();
+		MethodInformationDataCollector beforeChange = new MethodInformationDataCollector();
 		beforeChange.collectMethods(beforeChangeCode.getRootNode());
 
-		MethodClassDataCollector afterChange = new MethodClassDataCollector();
+		MethodInformationDataCollector afterChange = new MethodInformationDataCollector();
 		afterChange.collectMethods(afterChangeCode.getRootNode());
 		Set<MethodInformation> beforeChangeMethodSet = new HashSet<>();
 		beforeChangeMethodSet.addAll(beforeChange.getMethodList());

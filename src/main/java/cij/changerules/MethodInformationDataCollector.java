@@ -7,7 +7,7 @@ import java.util.Set;
 import cij.changerules.method.MethodInformation;
 import cij.grammar.java.CodeComponentNode;
 
-public class MethodClassDataCollector {
+public class MethodInformationDataCollector {
 
 	private Set<MethodInformation> methodList = new HashSet<>();
 
