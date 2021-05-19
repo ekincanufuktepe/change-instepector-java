@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cij.changerules.classinfo.AddFinalModifierClass;
 import cij.changerules.classinfo.DecreaseClassAccessibility;
+import cij.changerules.classinfo.DeleteFinalModifierClass;
 import cij.changerules.classinfo.IncreaseClassAccessibility;
 import cij.changerules.method.AddAbstractModifierMethod;
 import cij.changerules.method.AddFinalModifierMethod;
@@ -48,6 +49,7 @@ public class ChangeRuleSet{
 		changeRuleSet.add(new IncreaseClassAccessibility(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new DecreaseClassAccessibility(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new AddFinalModifierClass(beforeChangeTree, afterChangeTree));
+		changeRuleSet.add(new DeleteFinalModifierClass(beforeChangeTree, afterChangeTree));
 	}
 	
 	public ChangeRuleSet(JavaParseTree beforeChangeTree, JavaParseTree afterChangeTree) {
