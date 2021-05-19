@@ -2,6 +2,7 @@ package cij.changerules;
 
 import java.util.ArrayList;
 
+import cij.changerules.classinfo.IncreaseClassAccessibility;
 import cij.changerules.method.AddAbstractModifierMethod;
 import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
@@ -24,6 +25,7 @@ public class ChangeRuleSet{
 	private ArrayList<ChangeRule> changeRuleSet = new ArrayList<>();
 	
 	private void initilizeChangeRules(JavaParseTree beforeChangeTree, JavaParseTree afterChangeTree) {
+		// Method Change Rules
 		changeRuleSet.add(new AddMethod(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new IncreaseMethodAccessibility(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new DecreaseMethodAccessibility(beforeChangeTree, afterChangeTree));
@@ -39,6 +41,9 @@ public class ChangeRuleSet{
 		changeRuleSet.add(new ChangeParameterMethod(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new DeleteMethod(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new ChangeNameMethod(beforeChangeTree, afterChangeTree));
+		
+		// Class Change Rules
+		changeRuleSet.add(new IncreaseClassAccessibility(beforeChangeTree, afterChangeTree));
 	}
 	
 	public ChangeRuleSet(JavaParseTree beforeChangeTree, JavaParseTree afterChangeTree) {

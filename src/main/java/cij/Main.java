@@ -74,7 +74,7 @@ public class Main {
 		beforeChangeTree.tokenizeParseTree();
 		afterChangeTree.tokenizeParseTree();
 		
-		beforeChangeTree.printTree(beforeChangeTree.getRootNode(), 0);
+//		beforeChangeTree.printTree(beforeChangeTree.getRootNode(), 0);
 		
 		// Test rules
 		

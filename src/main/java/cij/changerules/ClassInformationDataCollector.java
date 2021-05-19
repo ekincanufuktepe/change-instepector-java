@@ -14,12 +14,12 @@ public class ClassInformationDataCollector {
 		return classList;
 	}
 
-	public void setMethodList(Set<ClassInformation> classList) {
+	public void setClassList(Set<ClassInformation> classList) {
 		this.classList = classList;
 	}
 
 	public void collectClasses(CodeComponentNode root) {
-		if(root.getType().equals("typeDeclaration")) {
+		if(root.getType().equals("(typeDeclaration")) {
 			ClassInformation ci = new ClassInformation();
 			CodeComponentNode baseClass = getBaseClass(root);
 			/*
@@ -35,7 +35,12 @@ public class ClassInformationDataCollector {
 			ci.setModifiers(getBaseClassModifiers(baseClass));
 			classList.add(ci);
 		}
-
+		else {
+			for(CodeComponentNode child : root.getChildren()) {
+				collectClasses(child);
+			}
+		}
+		return;
 	}
 
 	private CodeComponentNode getBaseClass(CodeComponentNode node) {
@@ -53,6 +58,8 @@ public class ClassInformationDataCollector {
 		for(CodeComponentNode child : node.getChildren()) {
 			if(child.getType().equals("(classModifier")) {
 				for(String modifier : child.getCodeList()) {
+					modifier = modifier.replace("(", "");
+					modifier = modifier.replace(")", "");
 					modifiers.add(modifier);
 				}
 			}
