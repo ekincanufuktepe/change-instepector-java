@@ -2,6 +2,7 @@ package cij.changerules;
 
 import java.util.ArrayList;
 
+import cij.changerules.classinfo.AddAbstractModifierClass;
 import cij.changerules.classinfo.AddFinalModifierClass;
 import cij.changerules.classinfo.AddStaticModifierClass;
 import cij.changerules.classinfo.DecreaseClassAccessibility;
@@ -54,6 +55,7 @@ public class ChangeRuleSet{
 		changeRuleSet.add(new DeleteFinalModifierClass(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new AddStaticModifierClass(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new DeleteStaticModifierClass(beforeChangeTree, afterChangeTree));
+		changeRuleSet.add(new AddAbstractModifierClass(beforeChangeTree, afterChangeTree));
 	}
 	
 	public ChangeRuleSet(JavaParseTree beforeChangeTree, JavaParseTree afterChangeTree) {
