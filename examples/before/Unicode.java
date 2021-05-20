@@ -1,4 +1,4 @@
-public abstract final class Unicode {
+public abstract final class Unicode extends Something implements AnotherThing {
         public static void main(String[] args) {
                 System.out.println("A = \uuu0041");
         }

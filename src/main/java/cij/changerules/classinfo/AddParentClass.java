@@ -34,9 +34,10 @@ public class AddParentClass extends ChangeRule{
 		ClassInformationDataCollector afterChange = new ClassInformationDataCollector();
 		afterChange.collectClasses(afterChangeCode.getRootNode());
 			
+		// The  first two for loops is for precautions just in case there are inner classes. Otherwise, this isn't actually a high complexity algorithm
 		for(ClassInformation beforeClassInfo : beforeChange.getClassList()) {
 			for(ClassInformation afterClassInfo : afterChange.getClassList()) {
-				if(beforeClassInfo.equals(afterClassInfo)) {
+				if(beforeClassInfo.getClassName().equals(afterClassInfo.getClassName())) {
 					Set<String> afterChangeParentClassSet = new HashSet<>();
 					afterChangeParentClassSet.addAll(afterClassInfo.getParentClassNames());
 					for(String parentClass : beforeClassInfo.getParentClassNames()) {
@@ -50,5 +51,4 @@ public class AddParentClass extends ChangeRule{
 		}
 		return false;
 	}
-
 }

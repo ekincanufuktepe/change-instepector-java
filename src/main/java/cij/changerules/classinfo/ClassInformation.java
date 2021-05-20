@@ -39,8 +39,7 @@ public class ClassInformation {
 
 	@Override
 	public String toString() {
-		return "ClassInformation [className=" + className + ", parentClassNames=" + parentClassNames + ", modifiers="
-				+ modifiers + "]";
+		return "ClassInformation [className=" + className + ", modifiers=" + modifiers + "]";
 	}
 
 	@Override

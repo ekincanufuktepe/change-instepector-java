@@ -1,4 +1,4 @@
-class Unicode {
+class Unicode extends Something{
         public static void main(String[] args) {
                 System.out.println("A = \uuu0041");
         }
