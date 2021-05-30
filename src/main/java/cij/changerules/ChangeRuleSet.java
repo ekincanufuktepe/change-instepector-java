@@ -32,7 +32,6 @@ import cij.grammar.java.JavaParseTree;
 public class ChangeRuleSet{
 	
 	private ArrayList<ChangeRule> changeRuleSet = new ArrayList<>();
-	
 	private void initilizeChangeRules(JavaParseTree beforeChangeTree, JavaParseTree afterChangeTree) {
 		// Method Change Rules
 		changeRuleSet.add(new AddMethod(beforeChangeTree, afterChangeTree));
@@ -84,9 +83,19 @@ public class ChangeRuleSet{
 	}
 	
 	private void runChangeRules() {
+		ArrayList<Thread> threads = new ArrayList<Thread>();
 		for(ChangeRule changeRule : changeRuleSet) {
-			changeRule.start();
+			Thread t = new Thread(changeRule);
+			threads.add(t);
+			t.start();
+		}
+		// Wait until the other threads complete before analyzing another .java file
+		for(Thread t : threads) {
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
 }
