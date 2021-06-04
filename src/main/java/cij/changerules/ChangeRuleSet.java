@@ -12,6 +12,7 @@ import cij.changerules.classinfo.DeleteFinalModifierClass;
 import cij.changerules.classinfo.DeleteParentClass;
 import cij.changerules.classinfo.DeleteStaticModifierClass;
 import cij.changerules.classinfo.IncreaseClassAccessibility;
+import cij.changerules.field.AddFinalModifierField;
 import cij.changerules.field.DecreaseFieldAccessibility;
 import cij.changerules.field.IncreaseFieldAccessibility;
 import cij.changerules.method.AddAbstractModifierMethod;
@@ -67,6 +68,7 @@ public class ChangeRuleSet{
 		// Field Change Rules
 		changeRuleSet.add(new IncreaseFieldAccessibility(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new DecreaseFieldAccessibility(beforeChangeTree, afterChangeTree));
+		changeRuleSet.add(new AddFinalModifierField(beforeChangeTree, afterChangeTree));
 	}
 	
 	public ChangeRuleSet(JavaParseTree beforeChangeTree, JavaParseTree afterChangeTree) {
