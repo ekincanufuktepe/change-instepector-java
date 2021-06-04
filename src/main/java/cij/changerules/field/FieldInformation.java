@@ -3,6 +3,8 @@ package cij.changerules.field;
 import java.util.HashSet;
 import java.util.Set;
 
+import cij.changerules.method.MethodInformation;
+
 public class FieldInformation {
 	private String fieldName;
 	private Set<String> fieldModifiers = new HashSet<>();
@@ -30,7 +32,15 @@ public class FieldInformation {
 	public void setFieldType(String fieldType) {
 		this.fieldType = fieldType;
 	}
-	
-	
-	
+	@Override
+	public boolean equals(Object obj) {
+		FieldInformation field = (FieldInformation)obj;
+		if(field.getFieldName().equals(this.getFieldName()))
+			return true;
+		return false;
+	}
+	@Override
+	public int hashCode() {
+		return getFieldName().hashCode();
+	}
 }
