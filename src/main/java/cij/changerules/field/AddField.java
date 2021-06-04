@@ -33,15 +33,11 @@ public class AddField extends ChangeRule{
 
 		FieldInformationDataCollector afterChange = new FieldInformationDataCollector();
 		afterChange.collectFields(afterChangeCode.getRootNode());
-		Set<FieldInformation> afterChangeFieldSet = new HashSet<>();
-		afterChangeFieldSet.addAll(afterChange.getFieldList());
 		
-		for(FieldInformation field : beforeChange.getFieldList()) {
-			afterChangeFieldSet.remove(field);
-		}
-		
-		if(!afterChangeFieldSet.isEmpty()) {
-			return true;
+		for(FieldInformation field : afterChange.getFieldList()) {
+			if(!beforeChange.getFieldList().contains(field)) {
+				return true;
+			}
 		}
 		return false;
 	}
