@@ -56,7 +56,7 @@ public class ChangeRuleSet{
 		changeRuleSet.add(new ChangeMethod(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new ChangeParameterMethod(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new DeleteMethod(beforeChangeTree, afterChangeTree));
-		changeRuleSet.add(new ChangeNameMethod(beforeChangeTree, afterChangeTree));
+		//changeRuleSet.add(new ChangeNameMethod(beforeChangeTree, afterChangeTree));
 		
 		// Class Change Rules
 		changeRuleSet.add(new IncreaseClassAccessibility(beforeChangeTree, afterChangeTree));
