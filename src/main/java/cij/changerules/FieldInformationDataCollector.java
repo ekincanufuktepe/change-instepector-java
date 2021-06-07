@@ -27,6 +27,8 @@ public class FieldInformationDataCollector {
 			fi.setFieldName(getFieldName(root));
 			// get and set the field modifiers
 			fi.setFieldModifiers(getFieldModifiers(root));
+			// get and set the field type
+			fi.setFieldType(getFieldType(root));
 			fieldList.add(fi);
 		}
 		else {
@@ -63,6 +65,29 @@ public class FieldInformationDataCollector {
 				fieldName = fieldName + getFieldName(child);
 			}
 		return fieldName;
+	}
+	
+	private String getFieldType(CodeComponentNode root) {
+		String fieldType = "";
+		for(CodeComponentNode child : root.getChildren()) {
+			if(child.getType().equals("(unannType")) {
+//				CodeComponentNode head = child;
+				String typeExtensionForArray = "";
+				do {
+					for(CodeComponentNode dimensionNode : child.getChildren()) {
+						if(dimensionNode.getType().equals("(dims")) {
+							typeExtensionForArray = "[]";
+							break;
+						}
+					}
+					child = child.getChildren().get(0);
+				} while (!child.getChildren().isEmpty());
+				fieldType = child.getCodeList().get(0).replace("(", "");
+				fieldType = fieldType.replace(")", "") + typeExtensionForArray;
+				break;
+			}
+		}
+		return fieldType;
 	}
 
 }

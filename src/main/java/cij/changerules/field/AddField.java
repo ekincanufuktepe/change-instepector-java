@@ -1,8 +1,5 @@
 package cij.changerules.field;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import cij.changerules.ChangeCategory;
 import cij.changerules.ChangeRule;
 import cij.changerules.FieldInformationDataCollector;
