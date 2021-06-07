@@ -3,6 +3,7 @@ package cij.changerules;
 import java.util.ArrayList;
 
 import cij.changerules.classinfo.AddAbstractModifierClass;
+import cij.changerules.classinfo.AddClass;
 import cij.changerules.classinfo.AddFinalModifierClass;
 import cij.changerules.classinfo.AddParentClass;
 import cij.changerules.classinfo.AddStaticModifierClass;
@@ -70,6 +71,7 @@ public class ChangeRuleSet{
 		changeRuleSet.add(new DeleteAbstractModifierClass(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new AddParentClass(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new DeleteParentClass(beforeChangeTree, afterChangeTree));
+		changeRuleSet.add(new AddClass(beforeChangeTree, afterChangeTree));
 		
 		// Field Change Rules
 		changeRuleSet.add(new IncreaseFieldAccessibility(beforeChangeTree, afterChangeTree));
