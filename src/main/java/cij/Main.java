@@ -15,6 +15,7 @@ import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
+import cij.changerules.ChangeCategory;
 import cij.changerules.ChangeRule;
 import cij.changerules.ChangeRuleSet;
 import cij.grammar.java.Java8Lexer;
@@ -102,6 +103,18 @@ public class Main {
 						}
 						bw.flush();
 					}
+					if(!retriver.getCommitAfterChangeJavaFiles(commit).contains(beforeChangeFile)) {
+						bw.write("\tFile:"+beforeChangeFile+"\n");
+						bw.write("\t\t"+ChangeCategory.DC_DELETE_CLASS+"\n");
+						bw.flush();
+					}
+				}
+				for(String afterChangeFile : retriver.getCommitAfterChangeJavaFiles(commit)) {
+					if(!retriver.getCommitAfterChangeJavaFiles(commit).contains(afterChangeFile)) {
+						bw.write("\tFile:"+afterChangeFile+"\n");
+						bw.write("\t\t"+ChangeCategory.AC_ADD_CLASS+"\n");
+						bw.flush();
+					}
 				}
 			}
 			bw.close();
@@ -109,25 +122,28 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-//				// Test it with a single file
-//				String[] arg = new String[3];
-//				arg[0] = "-ptree";
-//				arg[1] = "./python/commons-csv_data/f7c2ca216608457071ab45d05223952a69f76d58/before/CSVPrinterTest.java";
-//				arg[2] = "./python/commons-csv_data/f7c2ca216608457071ab45d05223952a69f76d58/after/CSVPrinterTest.java";
+
+//		// Test it with a single file
+//		String[] arg = new String[3];
+//		arg[0] = "-ptree";
+//		//				arg[1] = "./python/commons-csv_data/f7c2ca216608457071ab45d05223952a69f76d58/before/CSVPrinterTest.java";
+//		//				arg[2] = "./python/commons-csv_data/f7c2ca216608457071ab45d05223952a69f76d58/after/CSVPrinterTest.java";
 //
-//				doAll(arg);
-//				JavaParseTree beforeChangeTree = new JavaParseTree(parseTreeList.get(0));
-//				JavaParseTree afterChangeTree = new JavaParseTree(parseTreeList.get(1));
-//				beforeChangeTree.tokenizeParseTree();
-//				afterChangeTree.tokenizeParseTree();
+//		arg[1] = "./examples/before/Unicode.java";
+//		arg[2] = "./examples/after/Unicode.java";
 //
-////				beforeChangeTree.printTree(beforeChangeTree.getRootNode(), 0);
+//		doAll(arg);
+//		JavaParseTree beforeChangeTree = new JavaParseTree(parseTreeList.get(0));
+//		JavaParseTree afterChangeTree = new JavaParseTree(parseTreeList.get(1));
+//		beforeChangeTree.tokenizeParseTree();
+//		afterChangeTree.tokenizeParseTree();
+//
+//		//				beforeChangeTree.printTree(beforeChangeTree.getRootNode(), 0);
 //
 //		// Test rules
 //
-//				ChangeRuleSet ruleSet = new ChangeRuleSet(beforeChangeTree, afterChangeTree);
-//				ruleSet.printChangeTypes();
+//		ChangeRuleSet ruleSet = new ChangeRuleSet(beforeChangeTree, afterChangeTree);
+//		ruleSet.printChangeTypes();
 
 
 	}
@@ -274,10 +290,10 @@ public class Main {
 			if ( printTree ) {
 				parseTree = t.toStringTree(parser);
 				parseTreeList.add(parseTree);
-//				System.out.println("Parse Tree: " + parseTree);
+				//				System.out.println("Parse Tree: " + parseTree);
 				Token start = t.getStart();
-//				System.out.println("Start: "+start.getText());
-//				System.out.println("Rule context Text: " + t);
+				//				System.out.println("Start: "+start.getText());
+				//				System.out.println("Rule context Text: " + t);
 			}
 		}
 		catch (Exception e) {
@@ -285,7 +301,7 @@ public class Main {
 			e.printStackTrace();   // so we can get stack trace
 		}
 	}
-	
+
 	private static void reset() {
 		profile = false;
 		notree = false;
@@ -297,7 +313,7 @@ public class Main {
 		x2 = false;
 		threaded = false;
 		quiet = false;
-		
+
 		workers = new Worker[3];
 		windex = 0;
 		parseTree = "";
