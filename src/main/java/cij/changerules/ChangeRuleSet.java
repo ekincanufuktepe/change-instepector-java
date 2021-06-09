@@ -28,7 +28,6 @@ import cij.changerules.method.AddFinalModifierMethod;
 import cij.changerules.method.AddMethod;
 import cij.changerules.method.AddStaticModifierMethod;
 import cij.changerules.method.ChangeMethod;
-import cij.changerules.method.ChangeNameMethod;
 import cij.changerules.method.ChangeParameterMethod;
 import cij.changerules.method.ChangeParameterNamesMethod;
 import cij.changerules.method.ChangeReturnTypeMethod;

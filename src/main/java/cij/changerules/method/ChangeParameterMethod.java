@@ -57,10 +57,20 @@ public class ChangeParameterMethod extends ChangeRule {
 							beforeChangeMethod.getParameterTypeList().size() > afterChangeMethod.getParameterTypeList().size()) {
 						return true;
 					}
-					
 				}
 			}
 		}
+		for(MethodInformation afterChangeMethod : afterChange.getMethodList()) {
+			for(MethodInformation beforeChangeMethod : beforeChange.getMethodList()) {
+				if(beforeChangeMethod.getMethodName().equals(afterChangeMethod.getMethodName()) &&
+						beforeChangeMethod.getReturnType().equals(afterChangeMethod.getReturnType()) &&
+						beforeChangeMethod.getParameterTypeList().equals(afterChangeMethod.getParameterTypeList()) && 
+						!afterChangeMethod.getParameterModifierList().equals(beforeChangeMethod.getParameterModifierList())) {
+					return true;
+				}
+			}
+		}
+		
 		return false;
 	}
 
