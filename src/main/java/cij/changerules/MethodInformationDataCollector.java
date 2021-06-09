@@ -37,9 +37,19 @@ public class MethodInformationDataCollector {
 					// initialize method parameter list
 					method.setParameterList(collectMethodParameterList(child));
 					for(String parameter : method.getParameterList()) {
+//						System.out.println("MODIFIR: "+parameter);
 						String[] parameterToken = parameter.split(" ");
 						method.getParameterTypeList().add(parameterToken[0]);
 						method.getParameterNameList().add(parameterToken[1]);
+						if(parameterToken.length > 2) {
+							for(int i=2; i<parameterToken.length; i++) {
+								parameterToken[i] = parameterToken[i].replace("(", "");
+								parameterToken[i] = parameterToken[i].replace("[", "");
+								parameterToken[i] = parameterToken[i].replace("]", "");
+								method.getParameterModifierList().add(parameterToken[i].replace(")", ""));	
+							}
+						}
+							
 					}
 
 					method.setMethodBody(collectMethodBody(root));
@@ -104,9 +114,10 @@ public class MethodInformationDataCollector {
 		for(CodeComponentNode child : parameterNode.getChildren()) {
 			String parameterName = "";
 			String parameterType = "";
-			ArrayList<String> parameterModifiers = new ArrayList<String>();
+			ArrayList<String> parameterModifiers;
 			if(child.getType().equals("(formalParameters")) {
 				for(CodeComponentNode parameterNodes : child.getChildren()) {
+					parameterModifiers = new ArrayList<String>();
 					if(parameterNodes.getType().equals("(formalParameter")) {
 						for(CodeComponentNode parameterInfoNode : parameterNodes.getChildren()) {
 							if(parameterInfoNode.getType().equals("(variableModifier")) {
@@ -135,6 +146,9 @@ public class MethodInformationDataCollector {
 						} while (!parameterNodes.getChildren().isEmpty());
 						parameterType = parameterNodes.getCodeList().get(0).replace(")", "");
 					}
+//					if(parameterModifiers.isEmpty()) {
+//						parameterModifiers.add(" ");
+//					}
 //					do {
 //						if(parameterNodes.getChildren().size() > 1 && parameterNodes.getChildren().get(1).getType().equals("(variableDeclaratorId")) {
 //							parameterName = parameterNodes.getChildren().get(1).getCodeList().get(0).replace(")", "");
@@ -142,10 +156,16 @@ public class MethodInformationDataCollector {
 //						parameterNodes = parameterNodes.getChildren().get(0);
 //					} while (!parameterNodes.getChildren().isEmpty());
 //					parameterType = parameterNodes.getCodeList().get(0).replace(")", "");
-					parameterList.add(parameterType + " " + parameterName);
+					if(parameterModifiers.isEmpty()) {
+						parameterList.add(parameterType + " " + parameterName);
+					}
+					else {
+						parameterList.add(parameterType + " " + parameterName + " " + parameterModifiers);
+					}
 				}
 			}
 			if(child.getType().equals("(lastFormalParameter")) {
+				parameterModifiers = new ArrayList<String>();
 				for(CodeComponentNode parameterNodes : child.getChildren()) {
 					if(parameterNodes.getType().equals("(formalParameter")) {
 						for(CodeComponentNode parameterInfoNode : parameterNodes.getChildren()) {
@@ -175,6 +195,9 @@ public class MethodInformationDataCollector {
 						} while (!parameterNodes.getChildren().isEmpty());
 						parameterType = parameterNodes.getCodeList().get(0).replace(")", "");
 					}
+//					if(parameterModifiers.isEmpty()) {
+//						parameterModifiers.add(" ");
+//					}
 //					do {
 //						if(parameterNodes.getChildren().size() > 1 && parameterNodes.getChildren().get(1).getType().equals("(variableDeclaratorId")) {
 //							parameterName = parameterNodes.getChildren().get(1).getCodeList().get(0).replace(")", "");
@@ -184,7 +207,14 @@ public class MethodInformationDataCollector {
 //					parameterType = parameterNodes.getCodeList().get(0).replace(")", "");
 					
 				}
-				parameterList.add(parameterType + " " + parameterName);
+				if(parameterModifiers.isEmpty()) {
+					parameterList.add(parameterType + " " + parameterName);
+				}
+				else {
+					parameterList.add(parameterType + " " + parameterName + " " + parameterModifiers);
+				}
+				
+//				System.out.println("PARAMETER: "+ parameterType + " " + parameterName + " " + parameterModifiers);
 //				do {
 //					if(child.getChildren().size() > 1 && child.getChildren().get(1).getType().equals("(variableDeclaratorId")) {
 //						parameterName = child.getChildren().get(1).getCodeList().get(0).replace(")", "");

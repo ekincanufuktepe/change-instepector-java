@@ -10,6 +10,7 @@ public class MethodInformation {
 	private ArrayList<String> parameterList = new ArrayList<>();
 	private ArrayList<String> parameterNameList = new ArrayList<>();
 	private ArrayList<String> parameterTypeList = new ArrayList<>();
+	private ArrayList<String> parameterModifierList = new ArrayList<>();
 	private String returnType;
 	private ArrayList<String> accessModifier = new ArrayList<>();
 	private CodeComponentNode methodBody;
@@ -80,4 +81,12 @@ public class MethodInformation {
 	public void setMethodBody(CodeComponentNode methodBody) {
 		this.methodBody = methodBody;
 	}
+	public ArrayList<String> getParameterModifierList() {
+		return parameterModifierList;
+	}
+	public void setParameterModifierList(ArrayList<String> parameterModifierList) {
+		this.parameterModifierList = parameterModifierList;
+	}
+	
+	
 }
