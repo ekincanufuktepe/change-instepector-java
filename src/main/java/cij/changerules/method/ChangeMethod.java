@@ -19,7 +19,7 @@ public class ChangeMethod extends ChangeRule {
 	@Override
 	public ChangeCategory getCategory() {
 		if(isChangeCategory(treeBeforeChange, treeAfterChange)) {
-			return ChangeCategory.CM_CHANGE_NAME_METHOD;
+			return ChangeCategory.CM_CHANGE_METHOD;
 		}
 		return null;
 	}
