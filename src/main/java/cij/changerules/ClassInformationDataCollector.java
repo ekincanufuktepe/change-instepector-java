@@ -56,6 +56,10 @@ public class ClassInformationDataCollector {
 				// get first child of class declaration
 				return child.getChildren().get(0);
 			}
+			else if(child.getType().equals("(interfaceDeclaration")) {
+				// get first child of interface declaration
+				return child.getChildren().get(0);
+			}
 		}
 		return null;
 	}
@@ -68,7 +72,16 @@ public class ClassInformationDataCollector {
 	private Set<String> getBaseClassModifiers(CodeComponentNode node) {
 		Set<String> modifiers = new HashSet<>();
 		for(CodeComponentNode child : node.getChildren()) {
+			// get class modifiers
 			if(child.getType().equals("(classModifier")) {
+				for(String modifier : child.getCodeList()) {
+					modifier = modifier.replace("(", "");
+					modifier = modifier.replace(")", "");
+					modifiers.add(modifier);
+				}
+			}
+			// get interface modifiers
+			else if(child.getType().equals("(interfaceModifier")) {
 				for(String modifier : child.getCodeList()) {
 					modifier = modifier.replace("(", "");
 					modifier = modifier.replace(")", "");
@@ -94,6 +107,20 @@ public class ClassInformationDataCollector {
 			}
 			// Collect interfaces
 			else if(child.getType().equals("(superinterfaces")) {
+				// Gets the "interfaceType" nodes
+				for(CodeComponentNode superInterface : child.getChildren().get(0).getChildren()) {
+					// Gets the "classType" nodes for collecting the interface names
+					CodeComponentNode interfaceType = superInterface.getChildren().get(0);
+					if(interfaceType.getType().equals("(classType")) {
+						String superInterfaceName = interfaceType.getCodeList().get(0).replace("(", "");
+						superInterfaceName = superInterfaceName.replace(")", "");
+						parentClasses.add(superInterfaceName);
+					}
+				}
+			}
+			// Collect extended classes in interfaces
+			// An interface cannot implement another interface, therefore, that scenario is not included
+			else if(child.getType().equals("(extendsInterfaces")) {
 				// Gets the "interfaceType" nodes
 				for(CodeComponentNode superInterface : child.getChildren().get(0).getChildren()) {
 					// Gets the "classType" nodes for collecting the interface names
