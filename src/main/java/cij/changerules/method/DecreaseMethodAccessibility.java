@@ -37,6 +37,11 @@ public class DecreaseMethodAccessibility extends ChangeRule {
 							afterChangeMethod.getAccessModifier().contains("private")) {
 						return true;
 					}
+					if(!beforeChangeMethod.getAccessModifier().contains("private") &&
+							!beforeChangeMethod.getAccessModifier().contains("protected") &&
+							afterChangeMethod.getAccessModifier().contains("private")) {
+						return true;
+					}
 				}
 			}
 		}
