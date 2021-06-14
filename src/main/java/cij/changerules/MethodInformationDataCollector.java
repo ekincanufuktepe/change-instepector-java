@@ -35,7 +35,43 @@ public class MethodInformationDataCollector {
 					// initialize the method name
 					method.setMethodName(collectMethodName(child));
 					// initialize method parameter list
-					method.setParameterList(collectMethodParameterList(child));
+					method.setParameterList(collectMethodParameterList(child, MethodCategory.METHOD));
+					for(String parameter : method.getParameterList()) {
+//						System.out.println("MODIFIR: "+parameter);
+						String[] parameterToken = parameter.split(" ");
+						method.getParameterTypeList().add(parameterToken[0]);
+						method.getParameterNameList().add(parameterToken[1]);
+						if(parameterToken.length > 2) {
+							for(int i=2; i<parameterToken.length; i++) {
+								parameterToken[i] = parameterToken[i].replace("(", "");
+								parameterToken[i] = parameterToken[i].replace("[", "");
+								parameterToken[i] = parameterToken[i].replace("]", "");
+								method.getParameterModifierList().add(parameterToken[i].replace(")", ""));	
+							}
+						}
+							
+					}
+
+					method.setMethodBody(collectMethodBody(root));
+				}
+			}
+			methodList.add(method);
+		}
+		else if(root.getType().equals("(constructorDeclaration")) {
+			MethodInformation method = new MethodInformation();
+			for(CodeComponentNode child : root.getChildren()) {
+				if(child.getType().equals("(constructorModifier") && !child.getCodeList().isEmpty()) {
+					// initialize the modifiers
+					child.getCodeList().get(0).replace("(", "");
+					method.getAccessModifier().add(child.getCodeList().get(0).replace(")", ""));
+				}
+				if(child.getType().equals("(constructorDeclarator")) {
+					// initialize the method return type
+					method.setReturnType(collectMethodReturnType(child));
+					// initialize the method name
+					method.setMethodName(collectMethodName(child));
+					// initialize method parameter list
+					method.setParameterList(collectMethodParameterList(child, MethodCategory.CONSTRUCTOR));
 					for(String parameter : method.getParameterList()) {
 //						System.out.println("MODIFIR: "+parameter);
 						String[] parameterToken = parameter.split(" ");
@@ -66,7 +102,13 @@ public class MethodInformationDataCollector {
 
 	private String collectMethodReturnType(CodeComponentNode root) {
 		for(CodeComponentNode child : root.getChildren()) {
-			if(child.getType().equals("(result")) {
+			if(child.getType().equals("(simpleTypeName")) {
+				String typeName = child.getCodeList().get(0);
+				typeName = typeName.replace("(", "");
+				typeName = typeName.replace(")", "");
+				return typeName;
+			}
+			else if(child.getType().equals("(result")) {
 				if(!child.getCodeList().isEmpty()) {
 					child.getCodeList().get(0).replace("(", "");
 					return child.getCodeList().get(0).replace(")", "");
@@ -90,6 +132,12 @@ public class MethodInformationDataCollector {
 			if(child.getType().equals("(methodDeclarator")) {
 				return child.getCodeList().get(0);
 			}
+			else if(child.getType().equals("(simpleTypeName")) {
+				String typeName = child.getCodeList().get(0);
+				typeName = typeName.replace("(", "");
+				typeName = typeName.replace(")", "");
+				return typeName;
+			}
 		}
 		return "";
 	}
@@ -97,19 +145,26 @@ public class MethodInformationDataCollector {
 	/**
 	 * 
 	 * @param root
+	 * @param constructor 
 	 * @return
 	 */
-	private ArrayList<String> collectMethodParameterList(CodeComponentNode root) {
+	private ArrayList<String> collectMethodParameterList(CodeComponentNode root, MethodCategory methodCategory) {
 		CodeComponentNode parameterNode = null;
 		ArrayList<String> parameterList = new ArrayList<String>();
-		for(CodeComponentNode node : root.getChildren()) {
-			if(node.getType().equals("(methodDeclarator")) {
-				if(node.getChildren().isEmpty())
-					return parameterList;
-				parameterNode = node.getChildren().get(0);
-				break;
-			}
+		if(methodCategory.equals(MethodCategory.METHOD)) {
+			for(CodeComponentNode node : root.getChildren()) {
+				if(node.getType().equals("(methodDeclarator")) {
+					if(node.getChildren().isEmpty())
+						return parameterList;
+					parameterNode = node.getChildren().get(0);
+					break;
+				}
+			}			
 		}
+		else {
+			parameterNode = root;
+		}
+		
 
 		for(CodeComponentNode child : parameterNode.getChildren()) {
 			String parameterName = "";
@@ -231,6 +286,9 @@ public class MethodInformationDataCollector {
 	private CodeComponentNode collectMethodBody(CodeComponentNode root) {
 		for(CodeComponentNode child : root.getChildren()) {
 			if(child.getType().equals("(methodBody")) {
+				return child;
+			}
+			else if(child.getType().equals("(constructorBody")) {
 				return child;
 			}
 		}
