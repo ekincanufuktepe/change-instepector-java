@@ -30,10 +30,13 @@ public enum ChangeCategory {
 	DSM_DELETE_STATIC_MODIFIER_METHOD,
 	AAbM_ADD_ABSTRACT_MODIFIER_METHOD,
 	DAbM_DELETE_ABSTRACT_MODIFIER_METHOD,
-	CNM_CHANGE_NAME_METHOD,
+	CNM_CHANGE_NAME_METHOD, // Not used
 	CRM_CHANGE_RETURN_TYPE_METHOD,
 	CNPM_CHANGE_NAME_OF_PARAMETERS_METHOD,
 	CPM_CHANGE_PARAMETERS_OF_METHOD, // Except for the change of the names of the parameters
+	
+	// Method Body Change types
+	MCA_METHOD_CALL_ADDED,
 	
 	// Field Change types
 	AF_ADD_FIELD, // A field decleration
