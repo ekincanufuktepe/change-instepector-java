@@ -2,6 +2,7 @@ package cij.changerules.method;
 
 import java.util.ArrayList;
 
+import cij.changerules.method.body.MethodBodyInformation;
 import cij.grammar.java.CodeComponentNode;
 
 public class MethodInformation {
@@ -14,6 +15,7 @@ public class MethodInformation {
 	private String returnType;
 	private ArrayList<String> accessModifier = new ArrayList<>();
 	private CodeComponentNode methodBody;
+	private MethodBodyInformation methodBodyInformation;
 	
 	public String getMethodName() {
 		return methodName;
@@ -86,6 +88,12 @@ public class MethodInformation {
 	}
 	public void setParameterModifierList(ArrayList<String> parameterModifierList) {
 		this.parameterModifierList = parameterModifierList;
+	}
+	public MethodBodyInformation getMethodBodyInformation() {
+		return methodBodyInformation;
+	}
+	public void setMethodBodyInformation(MethodBodyInformation methodBodyInformation) {
+		this.methodBodyInformation = methodBodyInformation;
 	}
 	
 	
