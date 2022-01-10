@@ -31,12 +31,22 @@ public class MethodCallAdded extends ChangeRule {
 		beforeChange.collectMethods(beforeChangeCode.getRootNode());
 		MethodInformationDataCollector afterChange = new MethodInformationDataCollector();
 		afterChange.collectMethods(afterChangeCode.getRootNode());
+		
+		// When a method new method is added, look for added method invocations 
+		for(MethodInformation method : afterChange.getMethodList()) {
+			if(!beforeChange.getMethodList().contains(method) && !method.getMethodBodyInformation().getMethodInvocations().isEmpty()) {
+				return true;
+			}
+		}
  
+		// When an existing method's body is modified look if a method invocation is added
 		for(MethodInformation beforeChangeMethod : beforeChange.getMethodList()) {
 			for(MethodInformation afterChangeMethod : afterChange.getMethodList()) {
-				// If method method name, return type, parameter types are same, but the body is different
+				// Find method matches
 				if(beforeChangeMethod.getMethodByNameReturnParamType().equals(afterChangeMethod.getMethodByNameReturnParamType())) {
-					return findNewMethodCallInvocation(beforeChangeMethod, afterChangeMethod);
+					if(findNewMethodCallInvocation(beforeChangeMethod, afterChangeMethod)) {
+						return true;
+					}
 				}
 			}
 		}
