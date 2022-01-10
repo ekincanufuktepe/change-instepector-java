@@ -44,7 +44,7 @@ public class MethodBodyInformationDataCollector {
 	
 	// collect method invocations
 	public void collectionMethodInvocation(CodeComponentNode root) {
-		if(root.getType().equals("(methodInvocation")) {
+		if(root.getType().startsWith("(methodInvocation")) {
 			MethodInvocation methodInvocation = new MethodInvocation();
 			collectMethodInvocations(root, methodInvocation);
 			methodInvocationSet.add(methodInvocation);
