@@ -37,6 +37,7 @@ public enum ChangeCategory {
 	
 	// Method Body Change types
 	MCA_METHOD_CALL_ADDED,
+	MCD_METHOD_CALL_DELETED,
 	
 	// Field Change types
 	AF_ADD_FIELD, // A field decleration
