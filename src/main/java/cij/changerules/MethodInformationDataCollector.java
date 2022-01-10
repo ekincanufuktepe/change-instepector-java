@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import cij.changerules.method.MethodInformation;
+import cij.changerules.method.body.MethodBodyInformation;
 import cij.grammar.java.CodeComponentNode;
 
 public class MethodInformationDataCollector {
@@ -51,8 +52,10 @@ public class MethodInformationDataCollector {
 						}
 							
 					}
-
-					method.setMethodBody(collectMethodBody(root));
+					CodeComponentNode body = collectMethodBody(root);
+					MethodBodyInformation methodBodyInfo = new MethodBodyInformation(body);
+					method.setMethodBodyInformation(methodBodyInfo);
+					method.setMethodBody(body);
 				}
 			}
 			methodList.add(method);
@@ -87,8 +90,11 @@ public class MethodInformationDataCollector {
 						}
 							
 					}
-
-					method.setMethodBody(collectMethodBody(root));
+//					method.setMethodBody(collectMethodBody(root));
+					CodeComponentNode body = collectMethodBody(root);
+					MethodBodyInformation methodBodyInfo = new MethodBodyInformation(body);
+					method.setMethodBodyInformation(methodBodyInfo);
+					method.setMethodBody(body);
 				}
 			}
 			methodList.add(method);
