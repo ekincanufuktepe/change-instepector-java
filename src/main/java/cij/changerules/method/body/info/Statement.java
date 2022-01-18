@@ -4,35 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Statement {
-	private List<String> statementOperationType = new ArrayList<String>();
-	private List<String> operation = new ArrayList<String>();
-	
+
+	private List<Expression> expressions = new ArrayList<Expression>();
+
 	public Statement() {
+
 	}
-	
-	public Statement(List<String> statementOperationType, List<String> operation) {
-		super();
-		this.statementOperationType = statementOperationType;
-		this.operation = operation;
+
+	public List<Expression> getExpressions() {
+		return expressions;
 	}
-	
-	public List<String> getStatementOperationType() {
-		return statementOperationType;
-	}
-	public void setStatementOperationType(List<String> statementOperationType) {
-		this.statementOperationType = statementOperationType;
-	}
-	public List<String> getOperation() {
-		return operation;
-	}
-	public void setOperation(List<String> statement) {
-		this.operation = statement;
+
+	public void setExpressions(List<Expression> expressions) {
+		this.expressions = expressions;
 	}
 
 	@Override
-	public String toString() {
-		return "Statement [statementOperationType=" + statementOperationType + ", operation=" + operation + "]";
+	public boolean equals(Object obj) {
+		if(this.expressions.equals(((Statement)obj).getExpressions())) {
+			return true;
+		}
+		return false;
 	}
-	
-	
 }
