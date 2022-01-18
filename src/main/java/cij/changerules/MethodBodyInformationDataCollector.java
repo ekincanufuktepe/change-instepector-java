@@ -1,15 +1,12 @@
 package cij.changerules;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import cij.changerules.method.body.info.Expression;
-import cij.changerules.method.body.info.ForStatement;
 import cij.changerules.method.body.info.IfStatement;
 import cij.changerules.method.body.info.MethodInvocation;
 import cij.changerules.method.body.info.Statement;
-import cij.changerules.method.body.info.WhileStatement;
 import cij.grammar.java.CodeComponentNode;
 
 public class MethodBodyInformationDataCollector {
@@ -18,11 +15,11 @@ public class MethodBodyInformationDataCollector {
 	private Set<MethodInvocation> methodInvocationSet = new HashSet<MethodInvocation>(); 
 
 	public void collectMethodIfStatement(CodeComponentNode root) {
-		//		System.out.println("Let's go!");
 		if((root.getType().equals("(ifThenStatement") || root.getType().equals("(ifThenElseStatement")) 
 				&& !root.getCodeList().isEmpty()) {
 			IfStatement ifStmt = new IfStatement();
 			for(CodeComponentNode child : root.getChildren()) {
+				// if-statement condition
 				if(child.getType().equals("(expression")) {
 					// expression information collected and added to the given if-statement
 					collectExpressionInfo(root, ifStmt);
@@ -30,6 +27,10 @@ public class MethodBodyInformationDataCollector {
 				else if(child.getType().equals("(statementNoShortIf")) {
 					CodeComponentNode ifBlock = findBlockStatements(child);
 					collectBlockStatementsInfo(ifBlock, ifStmt);
+				}
+				// if-body statements
+				else if(child.getType().equals("(statement")) {
+					collectBlockStatementsInfo(child, ifStmt);
 				}
 			}
 			// add to if-statements set
@@ -41,7 +42,7 @@ public class MethodBodyInformationDataCollector {
 			}
 		}
 	}
-	
+
 	// collect method invocations
 	public void collectionMethodInvocation(CodeComponentNode root) {
 		if(root.getType().startsWith("(methodInvocation")) {
@@ -56,10 +57,11 @@ public class MethodBodyInformationDataCollector {
 		}
 	}
 
+	// collects the conditions written for the if statement
 	public void collectExpressionInfo(CodeComponentNode ifNode, IfStatement ifStmt) {
 		for(CodeComponentNode child : ifNode.getChildren()) {
 			if(!child.getCodeList().isEmpty()) {
-				Expression exp = new Expression(child.getType().substring(1), child.getCodeList().get(0));
+				Expression exp = new Expression(child.getType().substring(1), child.getCodeList());
 				ifStmt.getExpressions().add(exp);
 			}
 			collectExpressionInfo(child, ifStmt);
@@ -88,18 +90,21 @@ public class MethodBodyInformationDataCollector {
 		}
 	}
 
+	/* A statement can consist of multiple expression, so it find all expression in the if body
+	 * and adds it to the statement object
+	*/
 	public Statement collectStatementInfo(CodeComponentNode blockNode, Statement stmt) {
 		for(CodeComponentNode child : blockNode.getChildren()) {
 			if(!child.getCodeList().isEmpty()) {
-				stmt.getStatementOperationType().add(child.getType());
-				stmt.getOperation().add(child.getCodeList().toString());
+				Expression exp = new Expression(child.getType(), child.getCodeList());
+				stmt.getExpressions().add(exp);
 			}
 			collectStatementInfo(child, stmt);
 		}
 		return stmt;
 	}
-	
-	public void collectMethodInvocations(CodeComponentNode methodInvocationNode, MethodInvocation methodInvocation) {
+
+	private void collectMethodInvocations(CodeComponentNode methodInvocationNode, MethodInvocation methodInvocation) {
 		if(!methodInvocationNode.getCodeList().isEmpty()) {
 			methodInvocation.getMethodInvationInforamation().put(methodInvocationNode.getType(), methodInvocationNode.getCodeList());
 		}
@@ -115,7 +120,7 @@ public class MethodBodyInformationDataCollector {
 	public void setIfStmts(Set<IfStatement> ifStmts) {
 		this.ifStmts = ifStmts;
 	}
-	
+
 	public Set<MethodInvocation> getMethodInvocationSet() {
 		return methodInvocationSet;
 	}
