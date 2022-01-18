@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import cij.changerules.MethodBodyInformationDataCollector;
-import cij.changerules.method.MethodInformation;
 import cij.changerules.method.body.info.ForStatement;
 import cij.changerules.method.body.info.IfStatement;
 import cij.changerules.method.body.info.MethodInvocation;
