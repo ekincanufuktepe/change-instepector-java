@@ -38,6 +38,7 @@ import cij.changerules.method.DeleteMethod;
 import cij.changerules.method.DeleteStaticModifierMethod;
 import cij.changerules.method.IncreaseMethodAccessibility;
 import cij.changerules.method.body.AddIfStatement;
+import cij.changerules.method.body.DeleteIfStatement;
 import cij.changerules.method.body.MethodCallAdded;
 import cij.changerules.method.body.MethodCallDeleted;
 import cij.grammar.java.JavaParseTree;
@@ -58,7 +59,7 @@ public class ChangeRuleSet{
 //		changeRuleSet.add(new DeleteAbstractModifierMethod(beforeChangeTree, afterChangeTree));
 //		changeRuleSet.add(new ChangeReturnTypeMethod(beforeChangeTree, afterChangeTree));
 //		changeRuleSet.add(new ChangeParameterNamesMethod(beforeChangeTree, afterChangeTree));
-		changeRuleSet.add(new ChangeMethod(beforeChangeTree, afterChangeTree));
+//		changeRuleSet.add(new ChangeMethod(beforeChangeTree, afterChangeTree));
 //		changeRuleSet.add(new ChangeParameterMethod(beforeChangeTree, afterChangeTree));
 //		changeRuleSet.add(new DeleteMethod(beforeChangeTree, afterChangeTree));
 		//changeRuleSet.add(new ChangeNameMethod(beforeChangeTree, afterChangeTree));
@@ -67,6 +68,7 @@ public class ChangeRuleSet{
 		changeRuleSet.add(new MethodCallAdded(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new MethodCallDeleted(beforeChangeTree, afterChangeTree));
 		changeRuleSet.add(new AddIfStatement(beforeChangeTree, afterChangeTree));
+		changeRuleSet.add(new DeleteIfStatement(beforeChangeTree, afterChangeTree));
 		
 		// Class Change Rules
 //		changeRuleSet.add(new IncreaseClassAccessibility(beforeChangeTree, afterChangeTree));
