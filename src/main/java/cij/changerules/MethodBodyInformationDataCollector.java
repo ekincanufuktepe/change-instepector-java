@@ -1,6 +1,8 @@
 package cij.changerules;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import cij.changerules.method.body.info.Expression;
@@ -11,29 +13,15 @@ import cij.grammar.java.CodeComponentNode;
 
 public class MethodBodyInformationDataCollector {
 
-	private Set<IfStatement> ifStmts = new HashSet<IfStatement>();
+	private List<IfStatement> ifStmts = new ArrayList<IfStatement>();
 	private Set<MethodInvocation> methodInvocationSet = new HashSet<MethodInvocation>(); 
 
 	public void collectMethodIfStatement(CodeComponentNode root) {
 		if((root.getType().equals("(ifThenStatement") || root.getType().equals("(ifThenElseStatement")) 
 				&& !root.getCodeList().isEmpty()) {
 			IfStatement ifStmt = new IfStatement();
-			for(CodeComponentNode child : root.getChildren()) {
-				// if-statement condition
-				if(child.getType().equals("(expression")) {
-					// expression information collected and added to the given if-statement
-					collectExpressionInfo(root, ifStmt);
-				}
-				else if(child.getType().equals("(statementNoShortIf")) {
-					CodeComponentNode ifBlock = findBlockStatements(child);
-					collectBlockStatementsInfo(ifBlock, ifStmt);
-				}
-				// if-body statements
-				else if(child.getType().equals("(statement")) {
-					collectBlockStatementsInfo(child, ifStmt);
-				}
-			}
-			// add to if-statements set
+			ifStmt = initializeIfStatment(root, ifStmt);
+			// add to if-statements list
 			ifStmts.add(ifStmt);
 		}
 		else {
@@ -41,6 +29,30 @@ public class MethodBodyInformationDataCollector {
 				collectMethodIfStatement(child);
 			}
 		}
+	}
+	
+	public IfStatement initializeIfStatment(CodeComponentNode root, IfStatement ifStmt) {
+		for(CodeComponentNode child : root.getChildren()) {
+			// if-statement condition
+			if(child.getType().equals("(expression")) {
+				// expression information collected and added to the given if-statement
+				collectExpressionInfo(child, ifStmt);
+			}
+			// if-body statements
+//			else if(child.getType().equals("(statementNoShortIf")) {
+//				CodeComponentNode ifBlock = findBlockStatements(child);
+//				collectBlockStatementsInfo(ifBlock, ifStmt);
+//			}
+			// if there are chained if-statements check inside statement
+			else if(child.getType().equals("(statement")) {
+//				collectBlockStatementsInfo(child, ifStmt);
+				// search for chained if-then-else statements
+				for(CodeComponentNode chainedIf : child.getChildren()) {
+					collectMethodIfStatement(chainedIf);
+				}
+			}
+		}
+		return ifStmt;
 	}
 
 	// collect method invocations
@@ -57,30 +69,47 @@ public class MethodBodyInformationDataCollector {
 		}
 	}
 
+	/*
+	 * TODO: This where the chained if statements are added as a part of the upper if statement! 
+	 * */
 	// collects the conditions written for the if statement
 	public void collectExpressionInfo(CodeComponentNode ifNode, IfStatement ifStmt) {
 		for(CodeComponentNode child : ifNode.getChildren()) {
 			if(!child.getCodeList().isEmpty()) {
-				Expression exp = new Expression(child.getType().substring(1), child.getCodeList());
-				ifStmt.getExpressions().add(exp);
+				if(child.getType().equals("(ifThenStatement") || child.getType().equals("(ifThenElseStatement")) {
+//					System.out.println("ISSUE HERE!");
+					IfStatement chainedIf = new IfStatement();
+					chainedIf = initializeIfStatment(child, chainedIf);
+					ifStmt.getIfStatements().add(chainedIf);
+					continue;
+				}
+				else {
+					Expression exp = new Expression(child.getType(), child.getCodeList());
+					ifStmt.getExpressions().add(exp);
+//					collectExpressionInfo(child, ifStmt);
+				}
 			}
 			collectExpressionInfo(child, ifStmt);
 		}
 	}
 
-	private CodeComponentNode findBlockStatements(CodeComponentNode ifNode) {
-		CodeComponentNode blockStatementNode = null;
-		for(CodeComponentNode child : ifNode.getChildren()) {
-			if(child.getType().equals("(blockStatements")) {
-				blockStatementNode = child;
-				break;
-			}
-			else {
-				blockStatementNode = findBlockStatements(child);
-			}
-		}
-		return blockStatementNode;
-	}
+	/**
+	 * This method is used for collecting statements in an if block. 
+	 * Since the collection is disabled it is not used 
+	 * /
+//	private CodeComponentNode findBlockStatements(CodeComponentNode ifNode) {
+//		CodeComponentNode blockStatementNode = null;
+//		for(CodeComponentNode child : ifNode.getChildren()) {
+//			if(child.getType().equals("(blockStatements")) {
+//				blockStatementNode = child;
+//				break;
+//			}
+//			else {
+//				blockStatementNode = findBlockStatements(child);
+//			}
+//		}
+//		return blockStatementNode;
+//	}
 
 	public void collectBlockStatementsInfo(CodeComponentNode ifNode, IfStatement ifStmt) {
 		// gets block statements
@@ -113,11 +142,11 @@ public class MethodBodyInformationDataCollector {
 		}
 	}
 
-	public Set<IfStatement> getIfStmts() {
+	public List<IfStatement> getIfStmts() {
 		return ifStmts;
 	}
 
-	public void setIfStmts(Set<IfStatement> ifStmts) {
+	public void setIfStmts(List<IfStatement> ifStmts) {
 		this.ifStmts = ifStmts;
 	}
 
