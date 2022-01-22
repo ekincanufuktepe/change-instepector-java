@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IfStatement {
+	
+
 	//	private List<String> expressions = new ArrayList<String>();
 	//	private CodeComponentNode expressionsNode;
 	//	private List<String> statements = new ArrayList<String>();
 	private List<Expression> expressions = new ArrayList<Expression>();
 	private List<Statement> statements = new ArrayList<Statement>();
-
+	private List<IfStatement> ifStatements = new ArrayList<IfStatement>();
+	
 	public List<Expression> getExpressions() {
 		return expressions;
 	}
@@ -26,9 +29,15 @@ public class IfStatement {
 		this.statements = statements;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "IfStatement [expressions=" + expressions + ", statements=" + statements + ", ifStatements="
+//				+ ifStatements + "]";
+//	}
+	
 	@Override
 	public String toString() {
-		return "IfStatement [expressions=" + expressions + ", statements=" + statements + "]";
+		return "IfStatement [expressions=" + expressions + "]";
 	}
 
 	// only check expressions (aka. conditions)
@@ -47,11 +56,26 @@ public class IfStatement {
 		return false;
 	}
 
+//	@Override
+//	public boolean equals(Object obj) {
+//		if(this.equalsIfBody(obj) && this.equalsIfCondition(obj)) {
+//			return true;
+//		}
+//		return false;
+//	}
 	@Override
 	public boolean equals(Object obj) {
-		if(this.equalsIfBody(obj) && this.equalsIfCondition(obj)) {
+		if(this.equalsIfCondition(obj)) {
 			return true;
 		}
 		return false;
+	}
+
+	public List<IfStatement> getIfStatements() {
+		return ifStatements;
+	}
+
+	public void setIfStatements(List<IfStatement> ifStatements) {
+		this.ifStatements = ifStatements;
 	}
 }
