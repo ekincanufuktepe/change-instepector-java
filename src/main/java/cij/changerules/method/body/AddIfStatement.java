@@ -1,5 +1,7 @@
 package cij.changerules.method.body;
 
+import java.util.List;
+
 import cij.changerules.ChangeCategory;
 import cij.changerules.ChangeRule;
 import cij.changerules.MethodInformationDataCollector;
@@ -36,7 +38,8 @@ public class AddIfStatement extends ChangeRule {
 			for(MethodInformation afterChangeMethod : afterChange.getMethodList()) {
 				// Find method matches
 				if(beforeChangeMethod.getMethodByNameReturnParamType().equals(afterChangeMethod.getMethodByNameReturnParamType())) {
-					if(findNoneExistingIfStatement(beforeChangeMethod, afterChangeMethod)) {
+					// if an if-statement exists in new version but not in previous version
+					if(compareIfStatements(beforeChangeMethod, afterChangeMethod)) {
 						return true;
 					}
 				}
@@ -47,13 +50,23 @@ public class AddIfStatement extends ChangeRule {
 
 	// find if a matching if exists, checks if an "if-statement" with same body and condition exists
 	// does not handle ifs with same conditions but different body, or vice versa.
-	private boolean findNoneExistingIfStatement(MethodInformation beforeChangeMethod, MethodInformation afterChangeMethod) {
-		for(IfStatement ifStmts : afterChangeMethod.getMethodBodyInformation().getIfStatements()) {
-			if(!beforeChangeMethod.getMethodBodyInformation().getIfStatements().contains(ifStmts)) {
+	private boolean compareIfStatements(MethodInformation beforeChangeMethod, MethodInformation afterChangeMethod) {
+		for(IfStatement ifStmtAfter : afterChangeMethod.getMethodBodyInformation().getIfStatements()) {
+			
+			if(!containsIfStatement(beforeChangeMethod.getMethodBodyInformation().getIfStatements(), ifStmtAfter)) {
 				return true;
 			}
 		}
 		return false;
 	}
-
+	
+	private boolean containsIfStatement(List<IfStatement> listOfIfStatements, IfStatement ifStmtAfter) {
+		boolean containsFlag = false;
+		for(IfStatement ifStmt : listOfIfStatements) {
+			if(ifStmtAfter.equalsIfCondition(ifStmt)) {
+				containsFlag = true;
+			}
+		}
+		return containsFlag;
+	}
 }
