@@ -1,6 +1,8 @@
 package cij.changerules.method.body;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import cij.changerules.MethodBodyInformationDataCollector;
@@ -11,7 +13,7 @@ import cij.changerules.method.body.info.WhileStatement;
 import cij.grammar.java.CodeComponentNode;
 
 public class MethodBodyInformation {
-	private Set<IfStatement> ifStatements;
+	private List<IfStatement> ifStatements;
 	private Set<WhileStatement> whileStatements;
 	private Set<ForStatement> forStatements;
 	private Set<MethodInvocation> methodInvocations;
@@ -20,16 +22,16 @@ public class MethodBodyInformation {
 //		this.setIfStatements(new HashSet<>());
 //		this.setWhileStatements(new HashSet<>());
 //		this.setForStatements(new HashSet<>());
-		this.ifStatements = new HashSet<IfStatement>();
+		this.ifStatements = new ArrayList<IfStatement>();
 		this.methodInvocations = new HashSet<MethodInvocation>();
 		initiateMethodBodyInformationCollection(root);
 	}
 
-	public Set<IfStatement> getIfStatements() {
+	public List<IfStatement> getIfStatements() {
 		return ifStatements;
 	}
 
-	public void setIfStatements(Set<IfStatement> ifStatements) {
+	public void setIfStatements(List<IfStatement> ifStatements) {
 		this.ifStatements = ifStatements;
 	}
 

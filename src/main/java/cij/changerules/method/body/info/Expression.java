@@ -39,4 +39,9 @@ public class Expression {
 		}
 		return false;
 	}
+	
+//	@Override
+//	public int hashCode() {
+//		return (expression.hashCode() + expressionType.hashCode());
+//	}
 }

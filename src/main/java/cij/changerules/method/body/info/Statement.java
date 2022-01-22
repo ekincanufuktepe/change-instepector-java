@@ -26,4 +26,11 @@ public class Statement {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "Statement [expressions=" + expressions + "]";
+	}
+	
+	
 }
