@@ -14,7 +14,7 @@ import cij.grammar.java.CodeComponentNode;
 
 public class MethodBodyInformation {
 	private List<IfStatement> ifStatements;
-	private Set<WhileStatement> whileStatements;
+	private List<WhileStatement> whileStatements;
 	private List<ForStatement> forStatements;
 	private Set<MethodInvocation> methodInvocations;
 	
@@ -33,11 +33,11 @@ public class MethodBodyInformation {
 		this.ifStatements = ifStatements;
 	}
 
-	public Set<WhileStatement> getWhileStatements() {
+	public List<WhileStatement> getWhileStatements() {
 		return whileStatements;
 	}
 
-	public void setWhileStatements(Set<WhileStatement> whileStatements) {
+	public void setWhileStatements(List<WhileStatement> whileStatements) {
 		this.whileStatements = whileStatements;
 	}
 
@@ -57,6 +57,8 @@ public class MethodBodyInformation {
 		setIfStatements(collector.getIfStmts());
 		// set for-statement information
 		setForStatements(collector.getForStmts());
+		// set while-statement information
+		setWhileStatements(collector.getWhileStmts());
 		// Collect method invocations
 		collector.collectionMethodInvocation(root);
 		setMethodInvocations(collector.getMethodInvocationSet());
