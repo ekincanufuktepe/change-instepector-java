@@ -15,15 +15,13 @@ import cij.grammar.java.CodeComponentNode;
 public class MethodBodyInformation {
 	private List<IfStatement> ifStatements;
 	private Set<WhileStatement> whileStatements;
-	private Set<ForStatement> forStatements;
+	private List<ForStatement> forStatements;
 	private Set<MethodInvocation> methodInvocations;
 	
 	public MethodBodyInformation(CodeComponentNode root) {
-//		this.setIfStatements(new HashSet<>());
-//		this.setWhileStatements(new HashSet<>());
-//		this.setForStatements(new HashSet<>());
 		this.ifStatements = new ArrayList<IfStatement>();
 		this.methodInvocations = new HashSet<MethodInvocation>();
+		this.forStatements = new ArrayList<ForStatement>();
 		initiateMethodBodyInformationCollection(root);
 	}
 
@@ -43,19 +41,22 @@ public class MethodBodyInformation {
 		this.whileStatements = whileStatements;
 	}
 
-	public Set<ForStatement> getForStatements() {
+	public List<ForStatement> getForStatements() {
 		return forStatements;
 	}
 
-	public void setForStatements(Set<ForStatement> forStatements) {
+	public void setForStatements(List<ForStatement> forStatements) {
 		this.forStatements = forStatements;
 	}
 	
 	private void initiateMethodBodyInformationCollection(CodeComponentNode root) {
 		MethodBodyInformationDataCollector collector = new MethodBodyInformationDataCollector();
-		// Collect if statements
-		collector.collectMethodIfStatement(root);
+		// Initiate collection
+		collector.collectMethodBodyDetails(root);
+		// set if-statement information
 		setIfStatements(collector.getIfStmts());
+		// set for-statement information
+		setForStatements(collector.getForStmts());
 		// Collect method invocations
 		collector.collectionMethodInvocation(root);
 		setMethodInvocations(collector.getMethodInvocationSet());
