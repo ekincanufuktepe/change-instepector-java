@@ -10,40 +10,57 @@ import cij.changerules.method.body.info.ForStatement;
 import cij.changerules.method.body.info.IfStatement;
 import cij.changerules.method.body.info.MethodInvocation;
 import cij.changerules.method.body.info.Statement;
+import cij.changerules.method.body.info.WhileStatement;
 import cij.grammar.java.CodeComponentNode;
 
 public class MethodBodyInformationDataCollector {
 
 	private List<IfStatement> ifStmts = new ArrayList<IfStatement>();
 	private List<ForStatement> forStmts = new ArrayList<ForStatement>();
+	private List<WhileStatement> whileStmts = new ArrayList<WhileStatement>();
+
 	private Set<MethodInvocation> methodInvocationSet = new HashSet<MethodInvocation>(); 
 
 	public void collectMethodBodyDetails(CodeComponentNode root) {
+		// initiate if statement collection
 		if((root.getType().equals("(ifThenStatement") || root.getType().equals("(ifThenElseStatement")) 
 				&& !root.getCodeList().isEmpty()) {
 			IfStatement ifStmt = new IfStatement();
 			ifStmt = initializeIfStatment(root, ifStmt);
 			// add to if-statements list
-//			System.out.println("IF STATEMENT: " + ifStmt);
 			ifStmts.add(ifStmt);
 		}
+		// initiate for statement collection
 		else if(root.getType().equals("(forStatement")) {
 			ForStatement forStmt = new ForStatement();
 			forStmt = initializeForStatment(root, forStmt);
 			for(CodeComponentNode child : root.getChildren()) {
 				forStmt = initializeForStatment(child, forStmt);
-				// add to if-statements list
 			}
 			// add to for-statements list
 			forStmts.add(forStmt);
 		}
+		// initiate while statement collection
+		else if(root.getType().equals("(whileStatement") || root.getType().equals("(doStatement")) {
+			WhileStatement whileStmt = new WhileStatement();
+			whileStmt = initializeWhileStatment(root, whileStmt);
+			for(CodeComponentNode child : root.getChildren()) {
+				whileStmt = initializeWhileStatment(child, whileStmt);
+			}
+			// add to while-statements list
+			whileStmts.add(whileStmt);
+		}
+// 		else if(child.getType().equals("(statementNoShortIf")) {
+//			CodeComponentNode ifBlock = findBlockStatements(child);
+//			collectBlockStatementsInfo(ifBlock, ifStmt);
+//		}
 		else {
 			for(CodeComponentNode child : root.getChildren()) {
 				collectMethodBodyDetails(child);
 			}
 		}
 	}
-	
+
 	public IfStatement initializeIfStatment(CodeComponentNode root, IfStatement ifStmt) {
 		for(CodeComponentNode child : root.getChildren()) {
 			// if-statement condition
@@ -52,13 +69,13 @@ public class MethodBodyInformationDataCollector {
 				collectExpressionInfo(child, ifStmt);
 			}
 			// if-body statements
-//			else if(child.getType().equals("(statementNoShortIf")) {
-//				CodeComponentNode ifBlock = findBlockStatements(child);
-//				collectBlockStatementsInfo(ifBlock, ifStmt);
-//			}
+			//			else if(child.getType().equals("(statementNoShortIf")) {
+			//				CodeComponentNode ifBlock = findBlockStatements(child);
+			//				collectBlockStatementsInfo(ifBlock, ifStmt);
+			//			}
 			// if there are chained if-statements check inside statement
 			else if(child.getType().equals("(statement")) {
-//				collectBlockStatementsInfo(child, ifStmt);
+				//				collectBlockStatementsInfo(child, ifStmt);
 				// search for chained if-then-else statements
 				for(CodeComponentNode chainedIf : child.getChildren()) {
 					collectMethodBodyDetails(chainedIf);
@@ -97,13 +114,13 @@ public class MethodBodyInformationDataCollector {
 					if(stmt.getClass().isInstance(new IfStatement())) {
 						((IfStatement)stmt).getExpressions().add(exp);
 					}	
-//					collectExpressionInfo(child, ifStmt);
+					//					collectExpressionInfo(child, ifStmt);
 				}
 			}
 			collectExpressionInfo(child, stmt);
 		}
 	}
-	
+
 	public void collectExpressionForForInit(CodeComponentNode ifNode, Object stmt) {
 		for(CodeComponentNode child : ifNode.getChildren()) {
 			if(!child.getCodeList().isEmpty()) {
@@ -119,7 +136,7 @@ public class MethodBodyInformationDataCollector {
 						((IfStatement)stmt).getExpressions().add(exp);
 					}
 					else if(stmt.getClass().isInstance(new ForStatement())){
-//						System.out.println("Detected ForStatement");
+						//						System.out.println("Detected ForStatement");
 						((ForStatement)stmt).getForInits().add(exp);
 					}
 				}
@@ -127,7 +144,7 @@ public class MethodBodyInformationDataCollector {
 			collectExpressionForForInit(child, stmt);
 		}
 	}
-	
+
 	public void collectExpressionForForExpression(CodeComponentNode ifNode, Object stmt) {
 		for(CodeComponentNode child : ifNode.getChildren()) {
 			if(!child.getCodeList().isEmpty()) {
@@ -143,7 +160,7 @@ public class MethodBodyInformationDataCollector {
 						((IfStatement)stmt).getExpressions().add(exp);
 					}
 					else if(stmt.getClass().isInstance(new ForStatement())){
-//						System.out.println("Detected ForStatement");
+						//						System.out.println("Detected ForStatement");
 						((ForStatement)stmt).getForExpressions().add(exp);
 					}
 				}
@@ -151,7 +168,7 @@ public class MethodBodyInformationDataCollector {
 			collectExpressionForForExpression(child, stmt);
 		}
 	}
-	
+
 	public void collectExpressionForForUpdate(CodeComponentNode ifNode, Object stmt) {
 		for(CodeComponentNode child : ifNode.getChildren()) {
 			if(!child.getCodeList().isEmpty()) {
@@ -167,7 +184,7 @@ public class MethodBodyInformationDataCollector {
 						((IfStatement)stmt).getExpressions().add(exp);
 					}
 					else if(stmt.getClass().isInstance(new ForStatement())){
-//						System.out.println("Detected ForStatement");
+						//						System.out.println("Detected ForStatement");
 						((ForStatement)stmt).getForUpdates().add(exp);
 					}
 				}
@@ -175,7 +192,7 @@ public class MethodBodyInformationDataCollector {
 			collectExpressionForForUpdate(child, stmt);
 		}
 	}
-	
+
 	public void collectExpressionForForVariableId(CodeComponentNode ifNode, Object stmt) {
 		for(CodeComponentNode child : ifNode.getChildren()) {
 			if(!child.getCodeList().isEmpty()) {
@@ -191,7 +208,7 @@ public class MethodBodyInformationDataCollector {
 						((IfStatement)stmt).getExpressions().add(exp);
 					}
 					else if(stmt.getClass().isInstance(new ForStatement())){
-//						System.out.println("Detected ForStatement");
+						//						System.out.println("Detected ForStatement");
 						((ForStatement)stmt).getForUpdates().add(exp);
 					}
 				}
@@ -199,7 +216,7 @@ public class MethodBodyInformationDataCollector {
 			collectExpressionForForVariableId(child, stmt);
 		}
 	}
-	
+
 	public void collectExpressionForForUannType(CodeComponentNode ifNode, Object stmt) {
 		for(CodeComponentNode child : ifNode.getChildren()) {
 			if(!child.getCodeList().isEmpty()) {
@@ -215,7 +232,7 @@ public class MethodBodyInformationDataCollector {
 						((IfStatement)stmt).getExpressions().add(exp);
 					}
 					else if(stmt.getClass().isInstance(new ForStatement())){
-//						System.out.println("Detected ForStatement");
+						//						System.out.println("Detected ForStatement");
 						((ForStatement)stmt).getForUnannType().add(exp);
 					}
 				}
@@ -252,7 +269,7 @@ public class MethodBodyInformationDataCollector {
 
 	/* A statement can consist of multiple expression, so it find all expression in the if body
 	 * and adds it to the statement object
-	*/
+	 */
 	public Statement collectStatementInfo(CodeComponentNode blockNode, Statement stmt) {
 		for(CodeComponentNode child : blockNode.getChildren()) {
 			if(!child.getCodeList().isEmpty()) {
@@ -272,14 +289,14 @@ public class MethodBodyInformationDataCollector {
 			collectMethodInvocations(child, methodInvocation);
 		}
 	}
-	
+
 	public void collectMethodForStatement(CodeComponentNode root) {
 		if(root.getType().equals("(forStatement") && !root.getCodeList().isEmpty()) {
 			ForStatement forStmt = new ForStatement();
 			for(CodeComponentNode child : root.getChildren()) {
 				forStmt = initializeForStatment(child, forStmt);
-				// add to if-statements list
 			}
+			// add to for-statements list
 			forStmts.add(forStmt);
 		}
 		else {
@@ -288,45 +305,87 @@ public class MethodBodyInformationDataCollector {
 			}
 		}
 	}
+
+	public WhileStatement initializeWhileStatment(CodeComponentNode root, WhileStatement whileStmt) {
+		for(CodeComponentNode child : root.getChildren()) {
+			// while-statement expression/condition
+			if(child.getType().equals("(expression")) {
+				// expression information collected and added to the given if-statement
+				collectExpressionForWhileExpression(child, whileStmt);
+			}
+			else if(child.getType().equals("(statement")) {
+				//				collectBlockStatementsInfo(child, ifStmt);
+				// search for chained other statements
+				for(CodeComponentNode chains : child.getChildren()) {
+					collectMethodBodyDetails(chains);
+				}
+			}
+		}
+		return whileStmt;
+	}
 	
+	public void collectExpressionForWhileExpression(CodeComponentNode ifNode, Object stmt) {
+		for(CodeComponentNode child : ifNode.getChildren()) {
+			if(!child.getCodeList().isEmpty()) {
+				if(child.getType().equals("(ifThenStatement") || child.getType().equals("(ifThenElseStatement")) {
+					IfStatement chainedIf = new IfStatement();
+					chainedIf = initializeIfStatment(child, chainedIf);
+					((IfStatement)stmt).getIfStatements().add(chainedIf);
+					continue;
+				}
+				else {
+					Expression exp = new Expression(child.getType(), child.getCodeList());
+					if(stmt.getClass().isInstance(new IfStatement())) {
+						((IfStatement)stmt).getExpressions().add(exp);
+					}
+					else if(stmt.getClass().isInstance(new WhileStatement())){
+						//						System.out.println("Detected ForStatement");
+						((WhileStatement)stmt).getWhileExpressions().add(exp);
+					}
+				}
+			}
+			collectExpressionForWhileExpression(child, stmt);
+		}
+	}
+
 	public ForStatement initializeForStatment(CodeComponentNode root, ForStatement forStmt) {
 		for(CodeComponentNode child : root.getChildren()) {
-//			System.out.println("CHILD: "+ child.getType());
+			//			System.out.println("CHILD: "+ child.getType());
 			// for-statement expression/condition
 			if(child.getType().equals("(expression")) {
 				// expression information collected and added to the given if-statement
-//				System.out.println("FOREXP");
+				//				System.out.println("FOREXP");
 				collectExpressionForForExpression(child, forStmt);
 			}
 			// for-statement initialization
 			else if(child.getType().equals("(forInit")) {
-//				System.out.println("FORINIT");
+				//				System.out.println("FORINIT");
 				collectExpressionForForInit(child, forStmt);
 			}
 			// for-statement update
 			else if(child.getType().equals("(forUpdate")) {
-//				collectBlockStatementsInfo(child, ifStmt);
+				//				collectBlockStatementsInfo(child, ifStmt);
 				// search for chained if-then-else statements
-//				System.out.println("FORUPDATE");
+				//				System.out.println("FORUPDATE");
 				for(CodeComponentNode chainedFor : child.getChildren()) {
 					collectExpressionForForUpdate(chainedFor, forStmt);
 				}
 			}
 			else if(child.getType().equals("(unannType")) {
-//				System.out.println("FORUANNTYPE");
+				//				System.out.println("FORUANNTYPE");
 				for(CodeComponentNode chainedFor : child.getChildren()) {
 					collectExpressionForForUannType(chainedFor, forStmt);
 				}
 			}
 			else if(child.getType().equals("(variableDeclaratorId")) {
-//				System.out.println("FORVARIABLE");
+				//				System.out.println("FORVARIABLE");
 				for(CodeComponentNode chainedFor : child.getChildren()) {
 					collectExpressionForForVariableId(chainedFor, forStmt);
 				}
 			}
 			// check for inner 
 			else if(child.getType().equals("(statement")) {
-//				collectBlockStatementsInfo(child, ifStmt);
+				//				collectBlockStatementsInfo(child, ifStmt);
 				// search for chained if-then-else statements
 				for(CodeComponentNode chainedFor : child.getChildren()) {
 					collectMethodBodyDetails(chainedFor);
@@ -335,7 +394,7 @@ public class MethodBodyInformationDataCollector {
 		}
 		return forStmt;
 	}
-	
+
 
 	public List<IfStatement> getIfStmts() {
 		return ifStmts;
@@ -359,5 +418,13 @@ public class MethodBodyInformationDataCollector {
 
 	public void setForStmts(List<ForStatement> forStmts) {
 		this.forStmts = forStmts;
+	}
+	
+	public List<WhileStatement> getWhileStmts() {
+		return whileStmts;
+	}
+
+	public void setWhileStmts(List<WhileStatement> whileStmts) {
+		this.whileStmts = whileStmts;
 	}
 }
