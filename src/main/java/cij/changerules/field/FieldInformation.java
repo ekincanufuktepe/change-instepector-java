@@ -3,8 +3,6 @@ package cij.changerules.field;
 import java.util.HashSet;
 import java.util.Set;
 
-import cij.changerules.method.MethodInformation;
-
 public class FieldInformation {
 	private String fieldName;
 	private Set<String> fieldModifiers = new HashSet<>();
