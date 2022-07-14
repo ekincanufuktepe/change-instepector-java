@@ -67,3 +67,30 @@ python
 |   └── ...
 └── ...
 ```
+
+## Citing
+If you have used our work please cite us:
+### Tracking Code Bug Fix Ripple Effects Based on Change Patterns Using Markov Chain Models (IEEE TR '22)
+```tex
+@article{ufuktepe2022tracking,
+  title={Tracking Code Bug Fix Ripple Effects Based on Change Patterns Using Markov Chain Models},
+  author={Ufuktepe, Ekincan and Tuglular, Tugkan and Palaniappan, Kannappan},
+  journal={IEEE Transactions on Reliability},
+  volume={71},
+  number={2},
+  pages={1141--1156},
+  year={2022},
+  publisher={IEEE}
+}
+```
+### The relation between bug fix change patterns and change impact analysis (QRS'21)
+```
+@inproceedings{ufuktepe2021relation,
+  title={The relation between bug fix change patterns and change impact analysis},
+  author={Ufuktepe, Ekincan and Tuglular, Tugkan and Palaniappan, Kannappan},
+  booktitle={2021 IEEE 21st International Conference on Software Quality, Reliability and Security (QRS)},
+  pages={1089--1099},
+  year={2021},
+  organization={IEEE}
+}
+```
